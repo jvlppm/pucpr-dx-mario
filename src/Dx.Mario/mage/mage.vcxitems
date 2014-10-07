@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <CodeSharingProject>248F659F-DAC5-46E8-AC09-60EC9FC95053</CodeSharingProject>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>62b3d342-ed86-4854-a814-8ccdf23c8777</SharedGUID>
+    <ItemsProjectGuid>{e96f1e94-db3d-457a-8f6e-05ea4d9af696}</ItemsProjectGuid>
+    <ItemsRootNamespace>mage</ItemsRootNamespace>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)mage\AbstractGameLoop.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)mage\Effect.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)mage\GameWindow.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)mage\HandleError.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)mage\IGameLoop.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)mage\TString.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)mage\WindowsEvent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)mage\Effect.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)mage\GameWindow.cpp" />
+  </ItemGroup>
+</Project>
