@@ -1,6 +1,8 @@
 #include "mage/GameWindow.h"
+#include "DxMario.h"
 
 using namespace mage;
+using namespace mario;
 
 // Equivalente windows do "Main"
 int WINAPI WinMain(HINSTANCE hInstance,
@@ -15,7 +17,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		100, 100, 800, 600))
 	{
 		//Se deu certo, roda o game loop
-		//window.run(new MeshProject());
+		window.run(new DxMario());
 	}
 
 	//Finalizamos o sistema.

@@ -1,16 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30324.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dx.Mario", "Dx.Mario\Dx.Mario.vcxproj", "{74DB5C83-6A9B-47D4-A133-62CACDF52F38}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mage", "mage\mage.vcxitems", "{E96F1E94-DB3D-457A-8F6E-05EA4D9AF696}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dx.Games", "Dx.Games\Dx.Games.vcxproj", "{B1B54CEF-505C-4BB9-83BE-B6DFB229FD64}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		mage\mage.vcxitems*{e96f1e94-db3d-457a-8f6e-05ea4d9af696}*SharedItemsImports = 9
-		mage\mage.vcxitems*{74db5c83-6a9b-47d4-a133-62cacdf52f38}*SharedItemsImports = 4
+		mage\mage.vcxitems*{b1b54cef-505c-4bb9-83be-b6dfb229fd64}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{74DB5C83-6A9B-47D4-A133-62CACDF52F38}.Debug|Win32.Build.0 = Debug|Win32
 		{74DB5C83-6A9B-47D4-A133-62CACDF52F38}.Release|Win32.ActiveCfg = Release|Win32
 		{74DB5C83-6A9B-47D4-A133-62CACDF52F38}.Release|Win32.Build.0 = Release|Win32
+		{B1B54CEF-505C-4BB9-83BE-B6DFB229FD64}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B1B54CEF-505C-4BB9-83BE-B6DFB229FD64}.Debug|Win32.Build.0 = Debug|Win32
+		{B1B54CEF-505C-4BB9-83BE-B6DFB229FD64}.Release|Win32.ActiveCfg = Release|Win32
+		{B1B54CEF-505C-4BB9-83BE-B6DFB229FD64}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
