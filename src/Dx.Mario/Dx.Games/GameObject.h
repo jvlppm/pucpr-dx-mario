@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <d3dx9.h>
 
 namespace games {
 	class GameObject : std::enable_shared_from_this<GameObject>
@@ -15,6 +16,8 @@ namespace games {
 
 		void add(std::shared_ptr<GameObject> child);
 		void remove(std::shared_ptr<GameObject> child);
+
+		D3DXVECTOR3 globalPosition();
 
 		template <typename T>
 		std::shared_ptr<T> getAncestor()

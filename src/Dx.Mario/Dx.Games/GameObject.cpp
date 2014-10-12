@@ -58,3 +58,8 @@ void games::GameObject::remove(std::shared_ptr<GameObject> child)
 	child->parent_ref.reset();
 	pImpl->children = Utils::remove(pImpl->children, child);
 }
+
+D3DXVECTOR3 games::GameObject::globalPosition()
+{
+	return D3DXVECTOR3();
+}
