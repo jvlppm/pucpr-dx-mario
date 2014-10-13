@@ -86,8 +86,9 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="IDrawable.h" />
+    <ClInclude Include="IUpdateable.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="Utils.h" />
+    <ClInclude Include="ImmutableList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />

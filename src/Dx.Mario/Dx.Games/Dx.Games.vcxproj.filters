@@ -24,10 +24,13 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
+    <ClInclude Include="IDrawable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IDrawable.h">
+    <ClInclude Include="IUpdateable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImmutableList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

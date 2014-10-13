@@ -6,19 +6,17 @@
 #include "Utils.h"
 #include "IDrawable.h"
 #include "cpplinq.hpp"
+#include "IUpdateable.h"
 
 using namespace games;
 
 struct Scene::private_implementation {
-	private_implementation() :
-		cameras(std::make_shared<std::vector<std::shared_ptr<Camera>>>()),
-		drawables(std::make_shared<std::vector<std::shared_ptr<IDrawable>>>())
-	{
-
+	private_implementation() {
 	}
 
-	std::shared_ptr<std::vector<std::shared_ptr<Camera>>> cameras;
-	std::shared_ptr<std::vector<std::shared_ptr<IDrawable>>> drawables;
+	ImmutableList<std::shared_ptr<Camera>> cameras;
+	ImmutableList<std::shared_ptr<IDrawable>> drawables;
+	ImmutableList<std::shared_ptr<IUpdateable>> updateables;
 };
 
 Scene::Scene() : pImpl(new Scene::private_implementation())
@@ -27,6 +25,17 @@ Scene::Scene() : pImpl(new Scene::private_implementation())
 
 Scene::~Scene()
 {
+}
+
+void games::Scene::update(float time)
+{
+	if (auto updateables = pImpl->updateables)
+	{
+		for (auto updateable : *updateables)
+		{
+			updateable->update(time);
+		}
+	}
 }
 
 void Scene::draw(IDirect3DDevice9* device)
@@ -57,14 +66,20 @@ void Scene::draw(IDirect3DDevice9* device)
 
 void games::Scene::registerItem(std::shared_ptr<GameObject> obj)
 {
-	if (auto cam = std::dynamic_pointer_cast<Camera>(obj))
-		pImpl->cameras = Utils::add(pImpl->cameras, cam);
-	if (auto drawable = std::dynamic_pointer_cast<IDrawable>(obj))
-		pImpl->drawables = Utils::add(pImpl->drawables, drawable);
+	if (auto item = std::dynamic_pointer_cast<Camera>(obj))
+		pImpl->cameras = pImpl->cameras.add(item);
+	if (auto item = std::dynamic_pointer_cast<IDrawable>(obj))
+		pImpl->drawables = pImpl->drawables.add(item);
+	if (auto item = std::dynamic_pointer_cast<IUpdateable>(obj))
+		pImpl->updateables = pImpl->updateables.add(item);
 }
 
 void games::Scene::unregisterItem(std::shared_ptr<GameObject> obj)
 {
-	if (auto cam = std::dynamic_pointer_cast<Camera>(obj))
-		pImpl->cameras = Utils::remove(pImpl->cameras, cam);
+	if (auto item = std::dynamic_pointer_cast<Camera>(obj))
+		pImpl->cameras = pImpl->cameras.remove(item);
+	if (auto item = std::dynamic_pointer_cast<IDrawable>(obj))
+		pImpl->drawables = pImpl->drawables.remove(item);
+	if (auto item = std::dynamic_pointer_cast<IUpdateable>(obj))
+		pImpl->updateables = pImpl->updateables.remove(item);
 }

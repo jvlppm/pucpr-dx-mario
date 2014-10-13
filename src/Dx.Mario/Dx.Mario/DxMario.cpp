@@ -30,6 +30,7 @@ void DxMario::paint(IDirect3DDevice9* device)
 
 bool DxMario::process(float time)
 {
+	pImpl->scene->update(time);
 	return true;
 }
 

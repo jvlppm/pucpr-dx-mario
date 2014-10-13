@@ -6,11 +6,10 @@
 using namespace games;
 
 struct GameObject::private_implementation {
-	private_implementation() : children(std::make_shared<std::vector<std::shared_ptr<GameObject>>>()) {
-
+	private_implementation() {
 	}
 
-	std::shared_ptr<std::vector<std::shared_ptr<GameObject>>> children;
+	ImmutableList<std::shared_ptr<GameObject>> children;
 };
 
 GameObject::GameObject() : pImpl(new GameObject::private_implementation())
@@ -50,13 +49,13 @@ void games::GameObject::destroy()
 void games::GameObject::add(std::shared_ptr<GameObject> child)
 {
 	child->parent_ref = shared_from_this();
-	pImpl->children = Utils::add(pImpl->children, child);
+	pImpl->children = pImpl->children.add(child);
 }
 
 void games::GameObject::remove(std::shared_ptr<GameObject> child)
 {
 	child->parent_ref.reset();
-	pImpl->children = Utils::remove(pImpl->children, child);
+	pImpl->children = pImpl->children.remove(child);
 }
 
 D3DXVECTOR3 games::GameObject::globalPosition()
