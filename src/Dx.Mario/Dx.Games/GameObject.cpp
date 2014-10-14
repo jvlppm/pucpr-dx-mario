@@ -1,40 +1,32 @@
 #include "GameObject.h"
 #include <vector>
 #include "Scene.h"
-#include "Utils.h"
+#include "ImmutableList.h"
 
 using namespace games;
 
-struct GameObject::private_implementation {
-	private_implementation() {
-	}
-
-	ImmutableList<std::shared_ptr<GameObject>> children;
-};
-
-GameObject::GameObject() : pImpl(new GameObject::private_implementation())
+GameObject::GameObject()
 {
 }
-
 
 GameObject::~GameObject()
 {
 }
 
-void games::GameObject::init()
+void GameObject::init()
 {
 	auto scene = getAncestor<Scene>();
 	if (scene && scene != shared_from_this())
 		scene->registerItem(shared_from_this());
 
-	if (auto children = pImpl->children)
+	if (auto childrenLock = children)
 	{
-		for (auto child : *children)
+		for (auto child : *childrenLock)
 			child->init();
 	}
 }
 
-void games::GameObject::destroy()
+void GameObject::destroy()
 {
 	auto toRemove = shared_from_this();
 
@@ -46,19 +38,19 @@ void games::GameObject::destroy()
 		parent->remove(toRemove);
 }
 
-void games::GameObject::add(std::shared_ptr<GameObject> child)
+void GameObject::add(std::shared_ptr<GameObject> child)
 {
 	child->parent_ref = shared_from_this();
-	pImpl->children = pImpl->children.add(child);
+	children = children.add(child);
 }
 
-void games::GameObject::remove(std::shared_ptr<GameObject> child)
+void GameObject::remove(std::shared_ptr<GameObject> child)
 {
 	child->parent_ref.reset();
-	pImpl->children = pImpl->children.remove(child);
+	children = children.remove(child);
 }
 
-D3DXVECTOR3 games::GameObject::globalPosition()
+D3DXVECTOR3 GameObject::globalPosition()
 {
 	return D3DXVECTOR3();
 }

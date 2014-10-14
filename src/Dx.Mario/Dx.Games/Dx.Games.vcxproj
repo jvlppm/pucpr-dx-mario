@@ -87,12 +87,15 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IUpdateable.h" />
+    <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ImmutableList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="IDrawable.cpp" />
+    <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>

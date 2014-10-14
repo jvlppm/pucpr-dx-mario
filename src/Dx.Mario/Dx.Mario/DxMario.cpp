@@ -1,12 +1,21 @@
 #include "DxMario.h"
 #include "Scene.h"
 #include "Camera.h"
+#include "MeshRenderer.h"
 
 using namespace mario;
 using namespace games;
 
 struct DxMario::private_implementation {
 	std::shared_ptr<Scene> scene;
+
+	void setup(IDirect3DDevice9* device)
+	{
+		scene = std::make_shared<Scene>();
+		scene->add(std::make_shared<Camera>());
+		scene->add(std::make_shared<MeshRenderer>());
+		scene->init();
+	}
 };
 
 DxMario::DxMario() : pImpl(new DxMario::private_implementation())
@@ -36,7 +45,5 @@ bool DxMario::process(float time)
 
 void DxMario::setup(IDirect3DDevice9* device)
 {
-	pImpl->scene = std::make_shared<Scene>();
-	pImpl->scene->add(std::make_shared<Camera>());
-	pImpl->scene->init();
+	pImpl->setup(device);
 }
