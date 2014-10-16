@@ -2,6 +2,7 @@
 
 #include "IDrawable.h"
 #include "GameObject.h"
+#include "mage\TString.h"
 
 namespace games {
 	class MeshRenderer :
@@ -15,6 +16,7 @@ namespace games {
 		virtual bool sortedRendering();
 		virtual void draw(IDirect3DDevice9* device);
 		virtual D3DXVECTOR3 globalPosition();
+		void setShaderFile(IDirect3DDevice9* device, mage::TString file);
 
 	private:
 		struct private_implementation;

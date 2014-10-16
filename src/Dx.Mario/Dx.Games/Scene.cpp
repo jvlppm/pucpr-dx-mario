@@ -12,8 +12,11 @@ using namespace games;
 
 struct Scene::private_implementation {
 	private_implementation() {
+
 	}
 
+	Scene* self;
+	std::shared_ptr<Shader> shader;
 	ImmutableList<std::shared_ptr<Camera>> cameras;
 	ImmutableList<std::shared_ptr<IDrawable>> fastDrawables;
 	ImmutableList<std::shared_ptr<IDrawable>> drawables;
@@ -31,6 +34,7 @@ struct Scene::private_implementation {
 	void draw(IDirect3DDevice9* device)
 	{
 		using namespace cpplinq;
+		device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, self->clearColor, 1.0f, 0);
 
 		if (auto lockCameras = cameras)
 		{
@@ -42,7 +46,7 @@ struct Scene::private_implementation {
 				if (auto lockDrawables = fastDrawables)
 				{
 					for (auto drawable : *lockDrawables)
-						drawable->draw(device);
+						shader->draw(device, drawable);
 				}
 
 				if (auto lockDrawables = drawables)
@@ -55,7 +59,7 @@ struct Scene::private_implementation {
 						>> to_list();
 
 					for (auto drawable : sorted_items)
-						drawable->draw(device);
+						shader->draw(device, drawable);
 				}
 			}
 		}
@@ -94,6 +98,7 @@ struct Scene::private_implementation {
 
 Scene::Scene() : pImpl(new Scene::private_implementation())
 {
+	pImpl->self = this;
 }
 
 Scene::~Scene()

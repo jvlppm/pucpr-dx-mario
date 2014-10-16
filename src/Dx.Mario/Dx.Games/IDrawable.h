@@ -2,6 +2,8 @@
 #include <memory>
 #include <d3dx9math.h>
 #include <vector>
+#include "Material.h"
+#include "mage\Effect.h"
 
 namespace games {
 	class IDrawable
@@ -13,6 +15,8 @@ namespace games {
 
 		bool canRender();
 		void setVisible(bool visible);
+
+		std::shared_ptr<Material> material;
 
 	protected:
 		IDrawable();
