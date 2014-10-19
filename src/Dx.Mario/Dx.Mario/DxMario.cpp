@@ -2,9 +2,11 @@
 #include "Scene.h"
 #include "Camera.h"
 #include "MeshRenderer.h"
+#include "mage/TString.h"
 
 using namespace mario;
 using namespace games;
+using namespace mage;
 
 struct DxMario::private_implementation {
 	std::shared_ptr<Scene> scene;
@@ -12,8 +14,10 @@ struct DxMario::private_implementation {
 	void setup(IDirect3DDevice9* device)
 	{
 		scene = std::make_shared<Scene>();
-		scene->add(std::make_shared<Camera>());
-		scene->add(std::make_shared<MeshRenderer>());
+		scene->add<Camera>();
+		auto meshRenderer = scene->add<MeshRenderer>();
+		meshRenderer->setShaderFile(device, _T("texture.fx"));
+		meshRenderer->setModel(device, _T("skullocc.x"));
 		scene->init();
 	}
 };

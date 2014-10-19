@@ -21,6 +21,13 @@ namespace games {
 
 		D3DXVECTOR3 globalPosition();
 
+		template<class T, class... TArgs>
+		std::shared_ptr<T> add(TArgs&&... args) {
+			std::shared_ptr<T> item = std::make_shared<T>(std::forward<TArgs>(args)...);
+			add(item);
+			return item;
+		}
+
 		template <typename T>
 		std::shared_ptr<T> getAncestor()
 		{
