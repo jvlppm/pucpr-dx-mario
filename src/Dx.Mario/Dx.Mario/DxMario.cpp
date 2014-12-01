@@ -3,21 +3,31 @@
 #include "Camera.h"
 #include "MeshRenderer.h"
 #include "mage/TString.h"
+#include <memory>
+#include "Resources.h"
+#include "ResourceLoader.h"
 
 using namespace mario;
 using namespace games;
 using namespace mage;
+using namespace std;
 
 struct DxMario::private_implementation {
 	std::shared_ptr<Scene> scene;
 
 	void setup(IDirect3DDevice9* device)
 	{
+		Resources::setLoader(make_shared<ResourceLoader>());
+
 		scene = std::make_shared<Scene>();
-		scene->add<Camera>();
+		auto camera = scene->add<Camera>();
+		camera->transform([](D3DXMATRIX& m) { D3DXMatrixTranslation(&m, 1.0f, 0.8f, 20.0f); });
+		camera->setPerspective(60, 1, 5000);
+		camera->lookAt(D3DXVECTOR3(0, 0.8, 0));
+
 		auto meshRenderer = scene->add<MeshRenderer>();
-		meshRenderer->setShaderFile(device, _T("texture.fx"));
-		meshRenderer->setModel(device, _T("skullocc.x"));
+		meshRenderer->setShaderFile(device, _T("Resources/texture.fx"));
+		meshRenderer->setModel(device, _T("Resources/skullocc.x"));
 		scene->init();
 	}
 };

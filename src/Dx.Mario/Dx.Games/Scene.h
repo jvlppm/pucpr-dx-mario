@@ -2,7 +2,6 @@
 #include <d3d9.h>
 #include <memory>
 #include "GameObject.h"
-#include "Shader.h"
 
 namespace games {
 	class Scene : public GameObject
@@ -15,11 +14,11 @@ namespace games {
 		void registerItem(std::shared_ptr<GameObject> obj);
 		void unregisterItem(std::shared_ptr<GameObject> obj);
 
-		void setShader(std::shared_ptr<Shader> shader);
-		//void setDirectionalLight(D3DXCOLOR color, D3DXVECTOR3 direction);
-		//void setAmbientLight(D3DXCOLOR color);
-
 		D3DXCOLOR clearColor;
+		D3DXVECTOR3 lightDir;
+		D3DXVECTOR3 ambientColor;
+		D3DXVECTOR3 diffuseColor;
+		D3DXVECTOR3 specularColor;
 	private:
 		struct private_implementation;
 		std::unique_ptr<private_implementation> pImpl;

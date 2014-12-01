@@ -77,9 +77,3 @@ void IDrawable::setVisible(bool visible)
 {
 	pImpl->setVisible(visible);
 }
-
-void Test()
-{
-	GameObject a;
-	auto b = a.findChildren<IDrawable>();
-}

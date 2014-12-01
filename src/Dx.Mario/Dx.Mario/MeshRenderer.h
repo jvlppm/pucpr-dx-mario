@@ -3,19 +3,22 @@
 #include "IDrawable.h"
 #include "GameObject.h"
 #include "mage\TString.h"
+#include "Scene.h"
+#include "Camera.h"
 
-namespace games {
+namespace mario {
 	class MeshRenderer :
-		public GameObject,
-		public IDrawable
+		public games::GameObject,
+		public games::IDrawable
 	{
 	public:
 		MeshRenderer();
 		~MeshRenderer();
 
 		virtual bool sortedRendering();
-		virtual void draw(IDirect3DDevice9* device);
-		virtual D3DXVECTOR3 globalPosition();
+		virtual void draw(IDirect3DDevice9* device, games::Scene* scene, games::Camera* camera);
+		virtual D3DXVECTOR3 worldPosition();
+		virtual D3DXMATRIX world();
 		void setShaderFile(IDirect3DDevice9* device, mage::TString file);
 		void setModel(IDirect3DDevice9* device, mage::TString file);
 	private:

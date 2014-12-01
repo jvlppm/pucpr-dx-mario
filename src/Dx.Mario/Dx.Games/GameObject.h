@@ -19,7 +19,14 @@ namespace games {
 		void add(std::shared_ptr<GameObject> child);
 		void remove(std::shared_ptr<GameObject> child);
 
-		D3DXVECTOR3 globalPosition();
+		D3DXVECTOR3 worldPosition();
+		D3DXMATRIX world();
+
+		template <typename T>
+		void transform(T func) {
+			func(localTransform);
+			updateTransform();
+		}
 
 		template<class T, class... TArgs>
 		std::shared_ptr<T> add(TArgs&&... args) {
@@ -70,6 +77,10 @@ namespace games {
 		}
 
 	private:
+		D3DXMATRIX localTransform;
+		D3DXMATRIX globalTransform;
 		ImmutableList<std::shared_ptr<GameObject>> children;
+
+		void updateTransform();
 	};
 }

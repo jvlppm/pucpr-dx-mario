@@ -7,28 +7,24 @@
 #include "IDrawable.h"
 #include "cpplinq.hpp"
 #include "IUpdateable.h"
+#include <memory>
 
+using namespace std;
 using namespace games;
 
 struct Scene::private_implementation {
-	private_implementation() {
-
-	}
+	private_implementation() { }
 
 	Scene* self;
-	std::shared_ptr<Shader> shader;
-	ImmutableList<std::shared_ptr<Camera>> cameras;
-	ImmutableList<std::shared_ptr<IDrawable>> fastDrawables;
-	ImmutableList<std::shared_ptr<IDrawable>> drawables;
-	ImmutableList<std::shared_ptr<IUpdateable>> updateables;
+	ImmutableList<shared_ptr<Camera>> cameras;
+	ImmutableList<shared_ptr<IDrawable>> fastDrawables;
+	ImmutableList<shared_ptr<IDrawable>> drawables;
+	ImmutableList<shared_ptr<IUpdateable>> updateables;
 
 	void update(float time)
 	{
-		if (auto lock = updateables)
-		{
-			for (auto updateable : *lock)
-				updateable->update(time);
-		}
+		for (auto updateable : *updateables)
+			updateable->update(time);
 	}
 
 	void draw(IDirect3DDevice9* device)
@@ -36,62 +32,60 @@ struct Scene::private_implementation {
 		using namespace cpplinq;
 		device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, self->clearColor, 1.0f, 0);
 
-		if (auto lockCameras = cameras)
+		device->BeginScene();
+
+		for (auto camera : *cameras)
 		{
-			for (auto camera : *lockCameras)
+			device->SetViewport(&camera->viewport);
+
+			for (auto drawable : *fastDrawables)
+				drawable->draw(device, self, camera.get());
+
+			if (auto lockDrawables = drawables)
 			{
-				//auto vp = camera->view * camera->projection;
+				auto sorted_items = from_iterators(lockDrawables->begin(), lockDrawables->end())
+					>> orderby_descending([camera](shared_ptr<IDrawable> i) {
+					auto dist = camera->worldPosition() - i->worldPosition();
+					return D3DXVec3LengthSq(&dist);
+				})
+					>> to_list();
 
-				device->SetViewport(&camera->viewport);
-				if (auto lockDrawables = fastDrawables)
-				{
-					for (auto drawable : *lockDrawables)
-						shader->draw(device, drawable);
-				}
-
-				if (auto lockDrawables = drawables)
-				{
-					auto sorted_items = from_iterators(lockDrawables->begin(), lockDrawables->end())
-						>> orderby_descending([camera](std::shared_ptr<IDrawable> i) {
-							auto dist = camera->globalPosition() - i->globalPosition();
-							return D3DXVec3LengthSq(&dist);
-						})
-						>> to_list();
-
-					for (auto drawable : sorted_items)
-						shader->draw(device, drawable);
-				}
+				for (auto drawable : sorted_items)
+					drawable->draw(device, self, camera.get());
 			}
 		}
+
+		device->EndScene();
+		device->Present(nullptr, nullptr, nullptr, nullptr);
 	}
 
-	void registerItem(std::shared_ptr<GameObject> obj)
+	void registerItem(shared_ptr<GameObject> obj)
 	{
-		if (auto item = std::dynamic_pointer_cast<Camera>(obj))
+		if (auto item = dynamic_pointer_cast<Camera>(obj))
 			cameras = cameras.add(item);
 
-		if (auto item = std::dynamic_pointer_cast<IDrawable>(obj)) {
+		if (auto item = dynamic_pointer_cast<IDrawable>(obj)) {
 			if (item->sortedRendering())
 				drawables = drawables.add(item);
 			else
 				fastDrawables = fastDrawables.add(item);
 		}
 
-		if (auto item = std::dynamic_pointer_cast<IUpdateable>(obj))
+		if (auto item = dynamic_pointer_cast<IUpdateable>(obj))
 			updateables = updateables.add(item);
 	}
 
-	void unregisterItem(std::shared_ptr<GameObject> obj)
+	void unregisterItem(shared_ptr<GameObject> obj)
 	{
-		if (auto item = std::dynamic_pointer_cast<Camera>(obj))
+		if (auto item = dynamic_pointer_cast<Camera>(obj))
 			cameras = cameras.remove(item);
 
-		if (auto item = std::dynamic_pointer_cast<IDrawable>(obj)) {
+		if (auto item = dynamic_pointer_cast<IDrawable>(obj)) {
 			drawables = drawables.remove(item);
 			fastDrawables = fastDrawables.remove(item);
 		}
 
-		if (auto item = std::dynamic_pointer_cast<IUpdateable>(obj))
+		if (auto item = dynamic_pointer_cast<IUpdateable>(obj))
 			updateables = updateables.remove(item);
 	}
 };
@@ -99,6 +93,12 @@ struct Scene::private_implementation {
 Scene::Scene() : pImpl(new Scene::private_implementation())
 {
 	pImpl->self = this;
+	clearColor = D3DXCOLOR(101 / 255.f, 156 / 255.f, 239 / 255.f, 1);
+	ambientColor = D3DXVECTOR3(0.2f, 0.2f, 0.2f);
+	diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	specularColor = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	lightDir = D3DXVECTOR3(-1.0f, -1.0f, -4.0f);
+	D3DXVec3Normalize(&lightDir, &lightDir);
 }
 
 Scene::~Scene()
@@ -115,12 +115,12 @@ void Scene::draw(IDirect3DDevice9* device)
 	pImpl->draw(device);
 }
 
-void games::Scene::registerItem(std::shared_ptr<GameObject> obj)
+void games::Scene::registerItem(shared_ptr<GameObject> obj)
 {
 	pImpl->registerItem(obj);
 }
 
-void games::Scene::unregisterItem(std::shared_ptr<GameObject> obj)
+void games::Scene::unregisterItem(shared_ptr<GameObject> obj)
 {
 	pImpl->unregisterItem(obj);
 }

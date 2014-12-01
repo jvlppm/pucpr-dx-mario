@@ -7,6 +7,8 @@ using namespace games;
 
 GameObject::GameObject()
 {
+	D3DXMatrixIdentity(&globalTransform);
+	D3DXMatrixIdentity(&localTransform);
 }
 
 GameObject::~GameObject()
@@ -50,7 +52,23 @@ void GameObject::remove(std::shared_ptr<GameObject> child)
 	children = children.remove(child);
 }
 
-D3DXVECTOR3 GameObject::globalPosition()
+D3DXVECTOR3 GameObject::worldPosition()
 {
-	return D3DXVECTOR3();
+	return D3DXVECTOR3(globalTransform._41, globalTransform._42, globalTransform._43);
+}
+
+D3DXMATRIX GameObject::world()
+{
+	return globalTransform;
+}
+
+void games::GameObject::updateTransform()
+{
+	if (auto parent = parent_ref.lock())
+		globalTransform = parent->globalTransform * localTransform;
+	else
+		globalTransform = localTransform;
+
+	for (auto c : *children)
+		c->updateTransform();
 }

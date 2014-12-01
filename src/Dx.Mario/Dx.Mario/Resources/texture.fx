@@ -7,23 +7,18 @@ uniform extern float4x4 gWorld;
 uniform extern float4x4 gView;
 uniform extern float4x4 gProjection;
 
-//Componente ambiente
-uniform extern float4 gAmbientColor;
-uniform extern float4 gAmbientMaterial;
-
-//Componente difuso
-uniform extern float4 gDiffuseColor;
-uniform extern float4 gDiffuseMaterial;
+// ambiente
+uniform extern float4 gCameraPos;
 uniform extern float4 gLightDir;
-
-//Componente especular
+uniform extern float4 gAmbientColor;
+uniform extern float4 gDiffuseColor;
 uniform extern float4 gSpecularColor;
+
+// material
+uniform extern float4 gAmbientMaterial;
+uniform extern float4 gDiffuseMaterial;
 uniform extern float4 gSpecularMaterial;
 uniform extern float gSpecularPower;
-
-uniform extern float4 gCameraPos;
-
-//Texturas
 uniform extern texture gTexture;
 
 // Estrutura
@@ -40,7 +35,7 @@ sampler TesS = sampler_state
 {
 	Texture = <gTexture>;
 	MinFilter = Anisotropic;
-	MaxAnisotropy = 8;	
+	MaxAnisotropy = 8;
 	//MinFilter = LINEAR;
 	MagFilter = LINEAR;
 	MipFilter = LINEAR;
@@ -56,11 +51,11 @@ OutputVS TransformVS(float3 posL : POSITION0, float3 normal : NORMAL0, float2 te
 
 	// Transforma no espaço de coordenadas homogêneo
 	float4 posW = mul(float4(posL, 1.0f), gWorld);
-	float4 posWV = mul(posW, gView);
-	float4 posWVP = mul(posWV, gProjection);      
-	outVS.posH = posWVP;
-	  	  
-	outVS.N = mul(float4(normal,0), gWorld).xyz;
+		float4 posWV = mul(posW, gView);
+		float4 posWVP = mul(posWV, gProjection);
+		outVS.posH = posWVP;
+
+	outVS.N = mul(float4(normal, 0), gWorld).xyz;
 	outVS.V = (gCameraPos - posW).xyz;
 
 	//Repassamos a textura para processa-la na rasterização (pixel shader)
@@ -70,7 +65,7 @@ OutputVS TransformVS(float3 posL : POSITION0, float3 normal : NORMAL0, float2 te
 
 // Pixel shader
 float4 TransformPS(float3 tex0 : TEXCOORD0, float3 N : TEXCOORD1, float3 V : TEXCOORD2) : COLOR
-{	
+{
 	float3 normal = normalize(N);
 	float3 toCamera = normalize(V);
 	//Cálculo do componente ambiente
@@ -81,14 +76,14 @@ float4 TransformPS(float3 tex0 : TEXCOORD0, float3 N : TEXCOORD1, float3 V : TEX
 	float diffuseIntensity = max(dot(-lightDir, normal), 0.0f);
 	float3 diffuse = (gDiffuseColor * gDiffuseMaterial * diffuseIntensity).rgb;
 
-	//Cálculo do componente especular
-	float3 reflex = reflect(lightDir, normal);	
-	float specularIntensity = pow(saturate(dot(reflex, toCamera)), gSpecularPower);
+		//Cálculo do componente especular
+		float3 reflex = reflect(lightDir, normal);
+		float specularIntensity = pow(saturate(dot(reflex, toCamera)), gSpecularPower);
 	float3 specular = (gSpecularColor * gSpecularMaterial * specularIntensity).rgb;
-	
-	//Soma das luzes
-	float3 lighting = (ambient.rgb + diffuse.rgb) * tex2D(TesS, tex0).rgb;
-	return saturate(float4(lighting + specular.rgb, gAmbientMaterial.a));
+
+		//Soma das luzes
+		float3 lighting = (ambient.rgb + diffuse.rgb) * tex2D(TesS, tex0).rgb;
+		return saturate(float4(lighting + specular.rgb, gAmbientMaterial.a));
 }
 
 technique PhongTech
@@ -97,7 +92,7 @@ technique PhongTech
 	{
 		// Especifica o vertex e pixel shader associado a essa passada.            
 		vertexShader = compile vs_2_0 TransformVS();
-		pixelShader  = compile ps_2_0 TransformPS();
+		pixelShader = compile ps_2_0 TransformPS();
 
 		//Especifica o device state associado a essa passada. 
 		FillMode = Solid;

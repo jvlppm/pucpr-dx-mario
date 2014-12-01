@@ -4,24 +4,36 @@
 #include "ShaderCompileException.h"
 #include "ModelLoadException.h"
 #include "Vertex.h"
+#include "Resources.h"
+#include <string.h>
 
 using namespace games;
+using namespace mario;
 using namespace mage;
 using namespace std;
 
 struct MeshRenderer::private_implementation {
-	private_implementation() {
+	private_implementation(MeshRenderer* self) {
+		this->self = self;
 	}
 
-	shared_ptr<Effect> effect;
+	~private_implementation() {
+		for (auto t : textures)
+			t->Release();
+		materials.clear();
+		if (mesh) mesh.release();
+	}
+
+	MeshRenderer* self;
+	shared_ptr<Effect> shader;
 	unique_ptr<ID3DXMesh> mesh;
 	vector<D3DMATERIAL9> materials;
-	vector<shared_ptr<IDirect3DTexture9>> textures;
+	vector<IDirect3DTexture9*> textures;
 
 	void setShaderFile(IDirect3DDevice9* device, const TString& file)
 	{
-		effect = make_shared<Effect>(file);
-		string error = effect->compile(device);
+		shader = make_shared<Effect>(file);
+		string error = shader->compile(device);
 		if (!error.empty())
 			throw ShaderCompileException("Failed to compile shader file.\n" + error);
 	}
@@ -103,21 +115,61 @@ struct MeshRenderer::private_implementation {
 				//Verifica se há uma textura associada na face
 				if (d3dxmtrls[i].pTextureFilename != nullptr)
 				{
-					IDirect3DTexture9* tex = nullptr;
 					char* texFN = d3dxmtrls[i].pTextureFilename;
-					HR(D3DXCreateTextureFromFileA(device, texFN, &tex));
-					textures.push_back(shared_ptr<IDirect3DTexture9>(tex));
+					auto tex = Resources::getTexture(device, texFN);
+					tex->AddRef();
+					textures.push_back(tex);
 				}
 				else
 				{
-					textures.push_back(nullptr);
+					auto tex = Resources::getTexture(device, "default");
+					tex->AddRef();
+					textures.push_back(tex);
 				}
 			}
 		}
 	}
+
+	void draw(IDirect3DDevice9* device, Scene* scene, Camera* camera) {
+		shader->setTechnique("PhongTech");
+
+		shader->setMatrix("gWorld", ((GameObject*)self)->world());
+
+		for (unsigned int j = 0; j < materials.size(); j++) {
+			//Se tiver a textura, usa. Caso contrário usa a default
+			auto texture = textures[j];
+			if (!texture)
+				continue;
+
+			// Valores da Cena
+			shader->setVector("gLightDir", scene->lightDir);
+			shader->setVector("gAmbientColor", scene->ambientColor);
+			shader->setVector("gDiffuseColor", scene->diffuseColor);
+			shader->setVector("gSpecularColor", scene->specularColor);
+
+			// Valores da Câmera
+			shader->setMatrix("gView", camera->view);
+			shader->setVector("gCameraPos", camera->worldPosition());
+			shader->setMatrix("gProjection", camera->projection);
+
+			//Ajusta as propriedades do material
+			shader->setColor("gAmbientMaterial", materials[j].Ambient);
+			shader->setColor("gDiffuseMaterial", materials[j].Diffuse);
+			shader->setColor("gSpecularMaterial", materials[j].Specular);
+			shader->setFloat("gSpecularPower", materials[j].Power);
+
+			shader->setTexture("gTexture", texture);
+			shader->commit();
+			shader->execute([this, j](LPDIRECT3DDEVICE9 device)
+			{
+				mesh->DrawSubset(j);
+			});
+			texture = nullptr;
+		}
+	}
 };
 
-MeshRenderer::MeshRenderer() : pImpl(new MeshRenderer::private_implementation())
+MeshRenderer::MeshRenderer() : pImpl(new MeshRenderer::private_implementation(this))
 {
 }
 
@@ -130,14 +182,9 @@ bool MeshRenderer::sortedRendering()
 	return false;
 }
 
-void MeshRenderer::draw(IDirect3DDevice9* device)
+void MeshRenderer::draw(IDirect3DDevice9* device, Scene* scene, Camera* camera)
 {
-
-}
-
-D3DXVECTOR3 MeshRenderer::globalPosition()
-{
-	throw logic_error("The method or operation is not implemented.");
+	pImpl->draw(device, scene, camera);
 }
 
 void MeshRenderer::setShaderFile(IDirect3DDevice9* device, TString file)
@@ -148,4 +195,14 @@ void MeshRenderer::setShaderFile(IDirect3DDevice9* device, TString file)
 void MeshRenderer::setModel(IDirect3DDevice9* device, TString file)
 {
 	pImpl->setModel(device, file);
+}
+
+D3DXMATRIX mario::MeshRenderer::world()
+{
+	return GameObject::world();
+}
+
+D3DXVECTOR3 mario::MeshRenderer::worldPosition()
+{
+	return GameObject::worldPosition();
 }
