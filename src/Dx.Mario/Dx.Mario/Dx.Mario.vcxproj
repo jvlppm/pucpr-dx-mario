@@ -75,16 +75,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DxMario.cpp" />
-    <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DxMario.h" />
-    <ClInclude Include="MeshRenderer.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="ResourceLoader.h" />
-    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dx.Games\Dx.Games.vcxproj">

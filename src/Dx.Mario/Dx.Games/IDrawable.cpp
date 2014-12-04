@@ -73,6 +73,11 @@ bool IDrawable::canRender() {
 	return pImpl->canRender();
 }
 
+bool games::IDrawable::sortedRendering()
+{
+	return false;
+}
+
 void IDrawable::setVisible(bool visible)
 {
 	pImpl->setVisible(visible);

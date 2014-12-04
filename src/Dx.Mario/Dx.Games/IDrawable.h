@@ -14,7 +14,7 @@ namespace games {
 		IDrawable();
 		~IDrawable();
 
-		virtual bool sortedRendering() = 0;
+		virtual bool sortedRendering();
 		virtual void draw(IDirect3DDevice9* device, Scene* scene, Camera* camera) = 0;
 		virtual D3DXVECTOR3 worldPosition() = 0;
 		virtual D3DXMATRIX world() = 0;

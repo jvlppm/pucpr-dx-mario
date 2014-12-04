@@ -8,8 +8,6 @@ namespace games {
 	class GameObject : std::enable_shared_from_this<GameObject>
 	{
 	public:
-		std::weak_ptr<GameObject> parent_ref;
-
 		GameObject();
 		~GameObject();
 
@@ -19,14 +17,21 @@ namespace games {
 		void add(std::shared_ptr<GameObject> child);
 		void remove(std::shared_ptr<GameObject> child);
 
+		void setParent(std::weak_ptr<GameObject> parent);
+
 		D3DXVECTOR3 worldPosition();
 		D3DXMATRIX world();
 
 		template <typename T>
 		void transform(T func) {
 			func(localTransform);
-			updateTransform();
+			invalidateTransform();
 		}
+
+		void translate(float x, float y, float z);
+		void rotateX(float angle);
+		void rotateY(float angle);
+		void rotateZ(float angle);
 
 		template<class T, class... TArgs>
 		std::shared_ptr<T> add(TArgs&&... args) {
@@ -77,10 +82,13 @@ namespace games {
 		}
 
 	private:
+		std::weak_ptr<GameObject> parent_ref;
+		bool dirtyTransform;
 		D3DXMATRIX localTransform;
 		D3DXMATRIX globalTransform;
 		ImmutableList<std::shared_ptr<GameObject>> children;
 
 		void updateTransform();
+		void invalidateTransform();
 	};
 }

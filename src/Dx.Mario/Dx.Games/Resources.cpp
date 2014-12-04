@@ -4,4 +4,6 @@ using namespace mage;
 using namespace games;
 
 Resources::TexMap Resources::textures = {};
-std::shared_ptr<ResourceLoader> Resources::loader = nullptr;
+Resources::MeshMap Resources::meshes = {};
+Resources::EffectMap Resources::effects = {};
+std::shared_ptr<IResourceLoader> Resources::loader = nullptr;

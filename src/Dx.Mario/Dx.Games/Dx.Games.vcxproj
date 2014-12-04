@@ -92,6 +92,7 @@
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IUpdateable.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="ModelLoadException.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Scene.h" />

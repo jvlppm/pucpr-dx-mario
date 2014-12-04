@@ -7,6 +7,7 @@ using namespace games;
 
 GameObject::GameObject()
 {
+	dirtyTransform = false;
 	D3DXMatrixIdentity(&globalTransform);
 	D3DXMatrixIdentity(&localTransform);
 }
@@ -42,7 +43,7 @@ void GameObject::destroy()
 
 void GameObject::add(std::shared_ptr<GameObject> child)
 {
-	child->parent_ref = shared_from_this();
+	child->setParent(shared_from_this());
 	children = children.add(child);
 }
 
@@ -52,23 +53,58 @@ void GameObject::remove(std::shared_ptr<GameObject> child)
 	children = children.remove(child);
 }
 
+void GameObject::setParent(std::weak_ptr<GameObject> parent)
+{
+	parent_ref = parent;
+	invalidateTransform();
+}
+
 D3DXVECTOR3 GameObject::worldPosition()
 {
-	return D3DXVECTOR3(globalTransform._41, globalTransform._42, globalTransform._43);
+	auto worldMatrix = world();
+	return D3DXVECTOR3(worldMatrix._41, worldMatrix._42, worldMatrix._43);
 }
 
 D3DXMATRIX GameObject::world()
 {
+	if (dirtyTransform)
+		updateTransform();
+
 	return globalTransform;
 }
 
 void games::GameObject::updateTransform()
 {
 	if (auto parent = parent_ref.lock())
-		globalTransform = parent->globalTransform * localTransform;
+		globalTransform = parent->world() * localTransform;
 	else
 		globalTransform = localTransform;
 
+	dirtyTransform = false;
+}
+
+void GameObject::invalidateTransform() {
+	dirtyTransform = true;
 	for (auto c : *children)
-		c->updateTransform();
+		c->invalidateTransform();
+}
+
+void GameObject::translate(float x, float y, float z)
+{
+	transform([x, y, z](D3DXMATRIX& m) { D3DXMatrixTranslation(&m, x, y, z); });
+}
+
+void GameObject::rotateX(float angle)
+{
+	transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationX(&m, angle); });
+}
+
+void GameObject::rotateY(float angle)
+{
+	transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationY(&m, angle); });
+}
+
+void GameObject::rotateZ(float angle)
+{
+	transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationZ(&m, angle); });
 }

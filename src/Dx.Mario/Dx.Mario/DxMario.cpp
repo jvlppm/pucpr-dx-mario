@@ -1,11 +1,11 @@
 #include "DxMario.h"
 #include "Scene.h"
 #include "Camera.h"
-#include "MeshRenderer.h"
 #include "mage/TString.h"
 #include <memory>
 #include "Resources.h"
 #include "ResourceLoader.h"
+#include "Model.h"
 
 using namespace mario;
 using namespace games;
@@ -20,14 +20,23 @@ struct DxMario::private_implementation {
 		Resources::setLoader(make_shared<ResourceLoader>());
 
 		scene = std::make_shared<Scene>();
-		auto camera = scene->add<Camera>();
-		camera->transform([](D3DXMATRIX& m) { D3DXMatrixTranslation(&m, 1.0f, 0.8f, 20.0f); });
-		camera->setPerspective(60, 1, 5000);
-		camera->lookAt(D3DXVECTOR3(0, 0.8, 0));
+		scene->diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 0.8f);
+		scene->ambientColor = D3DXVECTOR3(0.4f, 0.4f, 0.4f);
 
-		auto meshRenderer = scene->add<MeshRenderer>();
-		meshRenderer->setShaderFile(device, _T("Resources/texture.fx"));
-		meshRenderer->setModel(device, _T("Resources/skullocc.x"));
+		auto camera = scene->add<Camera>();
+		camera->translate(0.0f, 4.0f, -20.0f);
+		camera->setPerspective(60, 1, 5000);
+		camera->lookAt(D3DXVECTOR3(0, 0.8f, 0));
+
+		auto model = scene->add<Model>();
+		model->setShader(device, "texture.fx");
+		model->setMesh(device, "skullocc.x");
+		scene->init();
+
+		auto model2 = scene->add<Model>();
+		model2->setShader(device, "texture.fx");
+		model2->setMesh(device, "skullocc.x");
+		model2->translate(8.0f, 0.0f, 0.0f);
 		scene->init();
 	}
 };

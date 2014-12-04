@@ -97,7 +97,7 @@ Scene::Scene() : pImpl(new Scene::private_implementation())
 	ambientColor = D3DXVECTOR3(0.2f, 0.2f, 0.2f);
 	diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	specularColor = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	lightDir = D3DXVECTOR3(-1.0f, -1.0f, -4.0f);
+	lightDir = D3DXVECTOR3(-1.0f, -1.0f, 4.0f);
 	D3DXVec3Normalize(&lightDir, &lightDir);
 }
 
