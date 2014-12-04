@@ -22,12 +22,12 @@ struct Model::private_implementation {
 	}
 
 	Model* self;
-	shared_ptr<Effect> shader;
+	shared_ptr<Effect> effect;
 	shared_ptr<Mesh> mesh;
 
-	void setShader(IDirect3DDevice9* device, const string& file)
+	void setEffect(IDirect3DDevice9* device, const string& file)
 	{
-		shader = Resources::getEffect(device, file);
+		effect = Resources::getEffect(device, file);
 	}
 
 	void setMesh(IDirect3DDevice9* device, const string& file)
@@ -36,9 +36,9 @@ struct Model::private_implementation {
 	}
 
 	void draw(IDirect3DDevice9* device, Scene* scene, Camera* camera) {
-		shader->setTechnique("PhongTech");
+		effect->setTechnique("PhongTech");
 
-		shader->setMatrix("gWorld", ((GameObject*)self)->world());
+		effect->setMatrix("gWorld", ((GameObject*)self)->world());
 
 		for (unsigned int j = 0; j < mesh->materials.size(); j++) {
 			//Se tiver a textura, usa. Caso contrário usa a default
@@ -47,25 +47,25 @@ struct Model::private_implementation {
 				continue;
 
 			// Valores da Cena
-			shader->setVector("gLightDir", scene->lightDir);
-			shader->setVector("gAmbientColor", scene->ambientColor);
-			shader->setVector("gDiffuseColor", scene->diffuseColor);
-			shader->setVector("gSpecularColor", scene->specularColor);
+			effect->setVector("gLightDir", scene->lightDir);
+			effect->setVector("gAmbientColor", scene->ambientColor);
+			effect->setVector("gDiffuseColor", scene->diffuseColor);
+			effect->setVector("gSpecularColor", scene->specularColor);
 
 			// Valores da Câmera
-			shader->setMatrix("gView", camera->view);
-			shader->setVector("gCameraPos", camera->worldPosition());
-			shader->setMatrix("gProjection", camera->projection);
+			effect->setMatrix("gView", camera->view);
+			effect->setVector("gCameraPos", camera->worldPosition());
+			effect->setMatrix("gProjection", camera->projection);
 
 			//Ajusta as propriedades do material
-			shader->setColor("gAmbientMaterial", mesh->materials[j].Ambient);
-			shader->setColor("gDiffuseMaterial", mesh->materials[j].Diffuse);
-			shader->setColor("gSpecularMaterial", mesh->materials[j].Specular);
-			shader->setFloat("gSpecularPower", mesh->materials[j].Power);
+			effect->setColor("gAmbientMaterial", mesh->materials[j].Ambient);
+			effect->setColor("gDiffuseMaterial", mesh->materials[j].Diffuse);
+			effect->setColor("gSpecularMaterial", mesh->materials[j].Specular);
+			effect->setFloat("gSpecularPower", mesh->materials[j].Power);
 
-			shader->setTexture("gTexture", texture.get());
-			shader->commit();
-			shader->execute([this, j](LPDIRECT3DDEVICE9 device)
+			effect->setTexture("gTexture", texture.get());
+			effect->commit();
+			effect->execute([this, j](LPDIRECT3DDEVICE9 device)
 			{
 				mesh->data->DrawSubset(j);
 			});
@@ -78,6 +78,12 @@ Model::Model() : pImpl(new Model::private_implementation(this))
 {
 }
 
+Model::Model(IDirect3DDevice9* device, const string& mesh, const string& effect) : Model()
+{
+	setMesh(device, mesh);
+	setEffect(device, effect);
+}
+
 Model::~Model()
 {
 }
@@ -87,9 +93,9 @@ void Model::draw(IDirect3DDevice9* device, Scene* scene, Camera* camera)
 	pImpl->draw(device, scene, camera);
 }
 
-void Model::setShader(IDirect3DDevice9* device, const string& file)
+void Model::setEffect(IDirect3DDevice9* device, const string& file)
 {
-	pImpl->setShader(device, file);
+	pImpl->setEffect(device, file);
 }
 
 void Model::setMesh(IDirect3DDevice9* device, const string& file)

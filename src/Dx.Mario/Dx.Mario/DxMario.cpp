@@ -24,19 +24,14 @@ struct DxMario::private_implementation {
 		scene->ambientColor = D3DXVECTOR3(0.4f, 0.4f, 0.4f);
 
 		auto camera = scene->add<Camera>();
-		camera->translate(0.0f, 4.0f, -20.0f);
+		camera->translate(0.0f, 6.0f, -20.0f);
 		camera->setPerspective(60, 1, 5000);
-		camera->lookAt(D3DXVECTOR3(0, 0.8f, 0));
+		camera->lookAt(D3DXVECTOR3(0, 0, 0));
 
-		auto model = scene->add<Model>();
-		model->setShader(device, "texture.fx");
-		model->setMesh(device, "skullocc.x");
-		scene->init();
+		scene->add<Model>(device, "skullocc.x", "texture.fx");
+		scene->add<Model>(device, "skullocc.x", "texture.fx")
+			->translate(8.0f, 0.0f, 0.0f);
 
-		auto model2 = scene->add<Model>();
-		model2->setShader(device, "texture.fx");
-		model2->setMesh(device, "skullocc.x");
-		model2->translate(8.0f, 0.0f, 0.0f);
 		scene->init();
 	}
 };

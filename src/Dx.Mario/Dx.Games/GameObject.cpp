@@ -4,6 +4,7 @@
 #include "ImmutableList.h"
 
 using namespace games;
+using namespace std;
 
 GameObject::GameObject()
 {
@@ -41,19 +42,19 @@ void GameObject::destroy()
 		parent->remove(toRemove);
 }
 
-void GameObject::add(std::shared_ptr<GameObject> child)
+void GameObject::add(shared_ptr<GameObject> child)
 {
 	child->setParent(shared_from_this());
 	children = children.add(child);
 }
 
-void GameObject::remove(std::shared_ptr<GameObject> child)
+void GameObject::remove(shared_ptr<GameObject> child)
 {
 	child->parent_ref.reset();
 	children = children.remove(child);
 }
 
-void GameObject::setParent(std::weak_ptr<GameObject> parent)
+void GameObject::setParent(weak_ptr<GameObject> parent)
 {
 	parent_ref = parent;
 	invalidateTransform();
@@ -89,22 +90,22 @@ void GameObject::invalidateTransform() {
 		c->invalidateTransform();
 }
 
-void GameObject::translate(float x, float y, float z)
+shared_ptr<GameObject> GameObject::translate(float x, float y, float z)
 {
-	transform([x, y, z](D3DXMATRIX& m) { D3DXMatrixTranslation(&m, x, y, z); });
+	return transform([x, y, z](D3DXMATRIX& m) { D3DXMatrixTranslation(&m, x, y, z); });
 }
 
-void GameObject::rotateX(float angle)
+shared_ptr<GameObject> GameObject::rotateX(float angle)
 {
-	transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationX(&m, angle); });
+	return transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationX(&m, angle); });
 }
 
-void GameObject::rotateY(float angle)
+shared_ptr<GameObject> GameObject::rotateY(float angle)
 {
-	transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationY(&m, angle); });
+	return transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationY(&m, angle); });
 }
 
-void GameObject::rotateZ(float angle)
+shared_ptr<GameObject> GameObject::rotateZ(float angle)
 {
-	transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationZ(&m, angle); });
+	return transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationZ(&m, angle); });
 }

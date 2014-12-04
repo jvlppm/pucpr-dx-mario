@@ -9,12 +9,13 @@ namespace mario {
 	{
 	public:
 		Model();
+		Model(IDirect3DDevice9* device, const std::string& mesh, const std::string& effect);
 		~Model();
 
 		virtual void draw(IDirect3DDevice9* device, games::Scene* scene, games::Camera* camera);
 		virtual D3DXVECTOR3 worldPosition();
 		virtual D3DXMATRIX world();
-		void setShader(IDirect3DDevice9* device, const std::string& file);
+		void setEffect(IDirect3DDevice9* device, const std::string& file);
 		void setMesh(IDirect3DDevice9* device, const std::string& file);
 	private:
 		struct private_implementation;

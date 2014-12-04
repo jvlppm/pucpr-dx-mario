@@ -23,15 +23,16 @@ namespace games {
 		D3DXMATRIX world();
 
 		template <typename T>
-		void transform(T func) {
+		std::shared_ptr<GameObject> transform(T func) {
 			func(localTransform);
 			invalidateTransform();
+			return shared_from_this();
 		}
 
-		void translate(float x, float y, float z);
-		void rotateX(float angle);
-		void rotateY(float angle);
-		void rotateZ(float angle);
+		std::shared_ptr<GameObject> translate(float x, float y, float z);
+		std::shared_ptr<GameObject> rotateX(float angle);
+		std::shared_ptr<GameObject> rotateY(float angle);
+		std::shared_ptr<GameObject> rotateZ(float angle);
 
 		template<class T, class... TArgs>
 		std::shared_ptr<T> add(TArgs&&... args) {

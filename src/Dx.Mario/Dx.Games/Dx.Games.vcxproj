@@ -91,7 +91,6 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IUpdateable.h" />
-    <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ModelLoadException.h" />
     <ClInclude Include="Resources.h" />
@@ -104,7 +103,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="IDrawable.cpp" />
-    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Vertex.cpp" />

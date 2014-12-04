@@ -2,7 +2,6 @@
 #include <memory>
 #include <d3dx9math.h>
 #include <vector>
-#include "Material.h"
 #include "Scene.h"
 #include "Camera.h"
 #include "mage\Effect.h"
@@ -21,8 +20,6 @@ namespace games {
 
 		bool canRender();
 		void setVisible(bool visible);
-
-		std::shared_ptr<Material> material;
 	private:
 		struct private_implementation;
 		std::unique_ptr<private_implementation> pImpl;
