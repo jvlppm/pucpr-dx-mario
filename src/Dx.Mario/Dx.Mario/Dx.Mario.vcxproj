@@ -95,6 +95,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Dwarf.x" />
     <None Include="Resources\skullocc.x" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +105,12 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resources\Armor.dds" />
+    <Image Include="Resources\Body.dds" />
+    <Image Include="Resources\DwarfHead.dds" />
+    <Image Include="Resources\Headgear.dds" />
+    <Image Include="Resources\Pack.dds" />
+    <Image Include="Resources\Weapons.dds" />
     <Image Include="Resources\whitetex.dds" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

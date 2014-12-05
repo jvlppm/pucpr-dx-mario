@@ -32,7 +32,7 @@ shared_ptr<IDirect3DTexture9> ResourceLoader::loadTexture(IDirect3DDevice9* devi
 
 	auto error = D3DXCreateTextureFromFileA(device, fileName.c_str(), &tex);
 	if (error)
-		throw exception("Error loading texture: " + error);
+		throw exception((static_cast<string>("Error loading texture \"") + name + "\": " + to_string(error)).c_str());
 	return shared_ptr<IDirect3DTexture9>(tex,  [](IDirect3DTexture9* tex) {
 		tex->Release();
 	});

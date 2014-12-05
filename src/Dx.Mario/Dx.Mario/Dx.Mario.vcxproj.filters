@@ -43,6 +43,9 @@
     <None Include="Resources\skullocc.x">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Resources\Dwarf.x">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\texture.fx">
@@ -51,6 +54,24 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\whitetex.dds">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Weapons.dds">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Pack.dds">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Body.dds">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Armor.dds">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Headgear.dds">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\DwarfHead.dds">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
