@@ -1,95 +1,46 @@
 #pragma once
-#include <memory>
-#include <d3dx9.h>
-#include <queue>
-#include "ImmutableList.h"
+#include "BaseObject.h"
 
 namespace games {
-	class GameObject : std::enable_shared_from_this<GameObject>
+
+	template <typename Type>
+	class GameObject : public BaseObject
 	{
 	public:
-		GameObject();
-		~GameObject();
-
-		virtual void init();
-		virtual void destroy();
-
-		void add(std::shared_ptr<GameObject> child);
-		void remove(std::shared_ptr<GameObject> child);
-
-		void setParent(std::weak_ptr<GameObject> parent);
-
-		D3DXVECTOR3 worldPosition();
-		D3DXMATRIX world();
+		GameObject() {
+		}
+		~GameObject() {
+		}
 
 		template <typename T>
-		std::shared_ptr<GameObject> transform(T func) {
-			func(localTransform);
-			invalidateTransform();
+		std::shared_ptr<Type> transform(T func) {
+			BaseObject::transform(func);
 			return shared_from_this();
 		}
 
-		std::shared_ptr<GameObject> translate(float x, float y, float z);
-		std::shared_ptr<GameObject> rotateX(float angle);
-		std::shared_ptr<GameObject> rotateY(float angle);
-		std::shared_ptr<GameObject> rotateZ(float angle);
-
-		template<class T, class... TArgs>
-		std::shared_ptr<T> add(TArgs&&... args) {
-			std::shared_ptr<T> item = std::make_shared<T>(std::forward<TArgs>(args)...);
-			add(item);
-			return item;
+		std::shared_ptr<Type> translate(float x, float y, float z) {
+			return transform([x, y, z](D3DXMATRIX& m) { D3DXMatrixTranslation(&m, x, y, z); });
 		}
-
-		template <typename T>
-		std::shared_ptr<T> getAncestor()
-		{
-			static_assert(std::is_base_of<GameObject, T>::value, "T must be a descendant of GameObject");
-			auto current = shared_from_this();
-			while (current) {
-				auto res = std::dynamic_pointer_cast<T>(current);
-				if (res)
-					return res;
-
-				current = current->parent_ref.lock();
-			}
-			return nullptr;
+		std::shared_ptr<Type> rotateX(float angle) {
+			return transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationX(&m, angle); });
 		}
-
-		template <typename T>
-		std::vector<std::shared_ptr<T>> findChildren()
-		{
-			std::vector<std::shared_ptr<T>> found;
-
-			std::queue<std::shared_ptr<GameObject>> toProcess;
-			toProcess.push(shared_from_this());
-
-			std::shared_ptr<GameObject> current;
-
-			while (toProcess.size() > 0) {
-				current = toProcess.front();
-				toProcess.pop();
-
-				if (auto possible = std::dynamic_pointer_cast<T>(current))
-					found.push_back(possible);
-				else {
-					if (auto children = current->children)
-						for (auto child : *children)
-							toProcess.push(child);
-				}
-			}
-
-			return found;
+		std::shared_ptr<Type> rotateY(float angle) {
+			return transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationY(&m, angle); });
 		}
+		std::shared_ptr<Type> rotateZ(float angle) {
+			return transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationZ(&m, angle); });
+		}
+		std::shared_ptr<Type> scale(float x, float y, float z) {
+			return transform([x, y, z](D3DXMATRIX& m) { D3DXMatrixScaling(&m, x, y, z); });
+		}
+		std::shared_ptr<Type> scale(float xyz) { return scale(xyz, xyz, xyz); };
+		std::shared_ptr<Type> scaleX(float scaleX) { return scale(scaleX, 1.0f, 1.0f); };
+		std::shared_ptr<Type> scaleY(float scaleY) { return scale(1.0f, scaleY, 1.0f); };
+		std::shared_ptr<Type> scaleZ(float scaleZ) { return scale(1.0f, 1.0f, scaleZ); };
 
-	private:
-		std::weak_ptr<GameObject> parent_ref;
-		bool dirtyTransform;
-		D3DXMATRIX localTransform;
-		D3DXMATRIX globalTransform;
-		ImmutableList<std::shared_ptr<GameObject>> children;
-
-		void updateTransform();
-		void invalidateTransform();
+	protected:
+		std::shared_ptr<Type> shared_from_this() {
+			return std::static_pointer_cast<Type>(BaseObject::shared_from_this());
+		}
 	};
 }

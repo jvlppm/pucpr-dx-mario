@@ -59,7 +59,7 @@ struct Scene::private_implementation {
 		device->Present(nullptr, nullptr, nullptr, nullptr);
 	}
 
-	void registerItem(shared_ptr<GameObject> obj)
+	void registerItem(shared_ptr<BaseObject> obj)
 	{
 		if (auto item = dynamic_pointer_cast<Camera>(obj))
 			cameras = cameras.add(item);
@@ -75,7 +75,7 @@ struct Scene::private_implementation {
 			updateables = updateables.add(item);
 	}
 
-	void unregisterItem(shared_ptr<GameObject> obj)
+	void unregisterItem(shared_ptr<BaseObject> obj)
 	{
 		if (auto item = dynamic_pointer_cast<Camera>(obj))
 			cameras = cameras.remove(item);
@@ -115,12 +115,12 @@ void Scene::draw(IDirect3DDevice9* device)
 	pImpl->draw(device);
 }
 
-void games::Scene::registerItem(shared_ptr<GameObject> obj)
+void games::Scene::registerItem(shared_ptr<BaseObject> obj)
 {
 	pImpl->registerItem(obj);
 }
 
-void games::Scene::unregisterItem(shared_ptr<GameObject> obj)
+void games::Scene::unregisterItem(shared_ptr<BaseObject> obj)
 {
 	pImpl->unregisterItem(obj);
 }

@@ -4,15 +4,15 @@
 #include "GameObject.h"
 
 namespace games {
-	class Scene : public GameObject
+	class Scene : public GameObject<Scene>
 	{
 	public:
 		Scene();
 		~Scene();
 		void draw(IDirect3DDevice9* device);
 		void update(float time);
-		void registerItem(std::shared_ptr<GameObject> obj);
-		void unregisterItem(std::shared_ptr<GameObject> obj);
+		void registerItem(std::shared_ptr<BaseObject> obj);
+		void unregisterItem(std::shared_ptr<BaseObject> obj);
 
 		D3DXCOLOR clearColor;
 		D3DXVECTOR3 lightDir;

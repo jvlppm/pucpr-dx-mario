@@ -38,24 +38,24 @@ struct Model::private_implementation {
 	void draw(IDirect3DDevice9* device, Scene* scene, Camera* camera) {
 		effect->setTechnique("PhongTech");
 
-		effect->setMatrix("gWorld", ((GameObject*)self)->world());
+		// Valores da Cena
+		effect->setVector("gLightDir", scene->lightDir);
+		effect->setVector("gAmbientColor", scene->ambientColor);
+		effect->setVector("gDiffuseColor", scene->diffuseColor);
+		effect->setVector("gSpecularColor", scene->specularColor);
+
+		// Valores da Câmera
+		effect->setMatrix("gView", camera->view);
+		effect->setVector("gCameraPos", camera->worldPosition());
+		effect->setMatrix("gProjection", camera->projection);
+
+		effect->setMatrix("gWorld", ((BaseObject*)self)->world());
 
 		for (unsigned int j = 0; j < mesh->materials.size(); j++) {
 			//Se tiver a textura, usa. Caso contrário usa a default
 			auto texture = mesh->textures[j];
 			if (!texture)
 				continue;
-
-			// Valores da Cena
-			effect->setVector("gLightDir", scene->lightDir);
-			effect->setVector("gAmbientColor", scene->ambientColor);
-			effect->setVector("gDiffuseColor", scene->diffuseColor);
-			effect->setVector("gSpecularColor", scene->specularColor);
-
-			// Valores da Câmera
-			effect->setMatrix("gView", camera->view);
-			effect->setVector("gCameraPos", camera->worldPosition());
-			effect->setMatrix("gProjection", camera->projection);
 
 			//Ajusta as propriedades do material
 			effect->setColor("gAmbientMaterial", mesh->materials[j].Ambient);
@@ -105,10 +105,10 @@ void Model::setMesh(IDirect3DDevice9* device, const string& file)
 
 D3DXMATRIX mario::Model::world()
 {
-	return GameObject::world();
+	return BaseObject::world();
 }
 
 D3DXVECTOR3 mario::Model::worldPosition()
 {
-	return GameObject::worldPosition();
+	return BaseObject::worldPosition();
 }

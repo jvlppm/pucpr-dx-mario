@@ -15,7 +15,7 @@ struct IDrawable::private_implementation {
 
 	void disableChildRendering()
 	{
-		if (auto obj = dynamic_cast<GameObject*>(self))
+		if (auto obj = dynamic_cast<BaseObject*>(self))
 		{
 			for (auto child : obj->findChildren<IDrawable>())
 			{
@@ -29,7 +29,7 @@ struct IDrawable::private_implementation {
 
 	void enableChildRendering()
 	{
-		if (auto obj = dynamic_cast<GameObject*>(self))
+		if (auto obj = dynamic_cast<BaseObject*>(self))
 		{
 			for (auto child : obj->findChildren<IDrawable>())
 			{

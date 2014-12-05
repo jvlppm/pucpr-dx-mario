@@ -6,18 +6,18 @@
 using namespace games;
 using namespace std;
 
-GameObject::GameObject()
+BaseObject::BaseObject()
 {
 	dirtyTransform = false;
 	D3DXMatrixIdentity(&globalTransform);
 	D3DXMatrixIdentity(&localTransform);
 }
 
-GameObject::~GameObject()
+BaseObject::~BaseObject()
 {
 }
 
-void GameObject::init()
+void BaseObject::init()
 {
 	auto scene = getAncestor<Scene>();
 	if (scene && scene != shared_from_this())
@@ -30,7 +30,7 @@ void GameObject::init()
 	}
 }
 
-void GameObject::destroy()
+void BaseObject::destroy()
 {
 	auto toRemove = shared_from_this();
 
@@ -42,31 +42,36 @@ void GameObject::destroy()
 		parent->remove(toRemove);
 }
 
-void GameObject::add(shared_ptr<GameObject> child)
+void BaseObject::add(shared_ptr<BaseObject> child)
 {
 	child->setParent(shared_from_this());
 	children = children.add(child);
 }
 
-void GameObject::remove(shared_ptr<GameObject> child)
+void BaseObject::remove(shared_ptr<BaseObject> child)
 {
 	child->parent_ref.reset();
 	children = children.remove(child);
 }
 
-void GameObject::setParent(weak_ptr<GameObject> parent)
+void BaseObject::setParent(weak_ptr<BaseObject> parent)
 {
 	parent_ref = parent;
 	invalidateTransform();
 }
 
-D3DXVECTOR3 GameObject::worldPosition()
+shared_ptr<BaseObject> BaseObject::getParent()
+{
+	return parent_ref.lock();
+}
+
+D3DXVECTOR3 BaseObject::worldPosition()
 {
 	auto worldMatrix = world();
 	return D3DXVECTOR3(worldMatrix._41, worldMatrix._42, worldMatrix._43);
 }
 
-D3DXMATRIX GameObject::world()
+D3DXMATRIX BaseObject::world()
 {
 	if (dirtyTransform)
 		updateTransform();
@@ -74,7 +79,7 @@ D3DXMATRIX GameObject::world()
 	return globalTransform;
 }
 
-void games::GameObject::updateTransform()
+void BaseObject::updateTransform()
 {
 	if (auto parent = parent_ref.lock())
 		globalTransform = parent->world() * localTransform;
@@ -84,28 +89,8 @@ void games::GameObject::updateTransform()
 	dirtyTransform = false;
 }
 
-void GameObject::invalidateTransform() {
+void BaseObject::invalidateTransform() {
 	dirtyTransform = true;
 	for (auto c : *children)
 		c->invalidateTransform();
-}
-
-shared_ptr<GameObject> GameObject::translate(float x, float y, float z)
-{
-	return transform([x, y, z](D3DXMATRIX& m) { D3DXMatrixTranslation(&m, x, y, z); });
-}
-
-shared_ptr<GameObject> GameObject::rotateX(float angle)
-{
-	return transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationX(&m, angle); });
-}
-
-shared_ptr<GameObject> GameObject::rotateY(float angle)
-{
-	return transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationY(&m, angle); });
-}
-
-shared_ptr<GameObject> GameObject::rotateZ(float angle)
-{
-	return transform([angle](D3DXMATRIX& m) { D3DXMatrixRotationZ(&m, angle); });
 }

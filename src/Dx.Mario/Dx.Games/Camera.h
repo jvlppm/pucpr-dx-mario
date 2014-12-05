@@ -4,15 +4,15 @@
 #include "GameObject.h"
 
 namespace games {
-	class Camera : public GameObject
+	class Camera : public GameObject<Camera>
 	{
 	public:
 		D3DVIEWPORT9 viewport;
 		D3DXMATRIX view;
 		D3DXMATRIX projection;
 
-		void setPerspective(float fov, float near, float far);
-		void lookAt(D3DXVECTOR3 target);
+		std::shared_ptr<Camera> setPerspective(float fov, float near, float far);
+		std::shared_ptr<Camera> lookAt(D3DXVECTOR3 target);
 
 		Camera();
 		~Camera();

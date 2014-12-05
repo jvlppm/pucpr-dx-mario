@@ -4,7 +4,7 @@
 
 namespace mario {
 	class Model :
-		public games::GameObject,
+		public games::GameObject<Model>,
 		public games::IDrawable
 	{
 	public:
