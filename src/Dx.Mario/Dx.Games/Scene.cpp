@@ -50,7 +50,7 @@ struct Scene::private_implementation {
 		device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, backBufferClearColor, 1.0f, 0);
 		device->BeginScene();
 		for (auto camera : *cameras)
-			camera->render(device);
+			camera->draw(device);
 		device->EndScene();
 		device->Present(nullptr, nullptr, nullptr, nullptr);
 	}

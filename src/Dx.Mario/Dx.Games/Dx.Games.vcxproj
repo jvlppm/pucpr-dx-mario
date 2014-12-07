@@ -93,11 +93,14 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IUpdateable.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="ModelLoadException.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ImmutableList.h" />
+    <ClInclude Include="IShader.h" />
     <ClInclude Include="ShaderCompileException.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
@@ -106,6 +109,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraVertex.cpp" />
     <ClCompile Include="IDrawable.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Vertex.cpp" />

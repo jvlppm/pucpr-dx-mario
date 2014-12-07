@@ -18,7 +18,7 @@ namespace games {
 
 		void begin(IDirect3DDevice9* device, std::shared_ptr<Scene> scene);
 		void end(IDirect3DDevice9* device);
-		void render(IDirect3DDevice9* device);
+		void draw(IDirect3DDevice9* device);
 
 		D3DXMATRIX view;
 		D3DXMATRIX projection;

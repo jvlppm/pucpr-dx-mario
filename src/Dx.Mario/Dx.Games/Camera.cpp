@@ -33,7 +33,7 @@ struct Camera::private_implementation {
 		device->EndScene();
 	}
 
-	void render(IDirect3DDevice9* device) {
+	void draw(IDirect3DDevice9* device) {
 		device->SetViewport(&viewport);
 
 		effect->setTechnique("Default");
@@ -42,12 +42,12 @@ struct Camera::private_implementation {
 		effect->execute([this](IDirect3DDevice9* device)
 		{
 			HR(device->SetVertexDeclaration(CameraVertex::getDeclaration(device).get()));
-			HR(device->SetStreamSource(0,						//Número do stream
-				getVertexBuffer(device).get(),									//Dados
-				0,												//Offset
-				sizeof(CameraVertex)));								//Tamanho do dado
-			HR(device->DrawPrimitive(D3DPT_TRIANGLESTRIP,		//Primitiva
-				0,												//Vértice inicial
+			HR(device->SetStreamSource(0,                       //Número do stream
+				getVertexBuffer(device).get(),                  //Dados
+				0,                                              //Offset
+				sizeof(CameraVertex)));                         //Tamanho do dado
+			HR(device->DrawPrimitive(D3DPT_TRIANGLESTRIP,       //Primitiva
+				0,                                              //Vértice inicial
 				2));
 		});
 	}
@@ -139,6 +139,6 @@ void Camera::end(IDirect3DDevice9* device) {
 	pImpl->end(device);
 }
 
-void Camera::render(IDirect3DDevice9* device) {
-	pImpl->render(device);
+void Camera::draw(IDirect3DDevice9* device) {
+	pImpl->draw(device);
 }
