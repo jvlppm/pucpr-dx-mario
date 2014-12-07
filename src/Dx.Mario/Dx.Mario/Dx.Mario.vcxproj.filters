@@ -51,6 +51,9 @@
     <FxCompile Include="Resources\texture.fx">
       <Filter>Resource Files</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\camera.fx">
+      <Filter>Resource Files</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\whitetex.dds">

@@ -33,7 +33,7 @@ struct OutputVS
 // Sampler
 sampler TesS = sampler_state
 {
-	Texture = <gTexture>;
+	Texture = < gTexture > ;
 	MinFilter = Anisotropic;
 	MaxAnisotropy = 8;
 	//MinFilter = LINEAR;

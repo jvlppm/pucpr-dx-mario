@@ -2,6 +2,9 @@
 
 #include <d3dx9.h>
 #include "GameObject.h"
+#include "Scene.h"
+#include <memory>
+#include "mage/Effect.h"
 
 namespace games {
 	class Camera : public GameObject<Camera>
@@ -13,8 +16,14 @@ namespace games {
 		std::shared_ptr<Camera> setPerspective(float fov, float near, float far);
 		std::shared_ptr<Camera> lookAt(D3DXVECTOR3 target);
 
-		D3DVIEWPORT9 viewport;
+		void begin(IDirect3DDevice9* device, std::shared_ptr<Scene> scene);
+		void end(IDirect3DDevice9* device);
+		void render(IDirect3DDevice9* device);
+
 		D3DXMATRIX view;
 		D3DXMATRIX projection;
+	private:
+		struct private_implementation;
+		std::unique_ptr<private_implementation> pImpl;
 	};
 }
