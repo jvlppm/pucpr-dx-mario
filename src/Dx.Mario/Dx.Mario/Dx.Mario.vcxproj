@@ -75,14 +75,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DxMario.cpp" />
-    <ClCompile Include="Model.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
+    <ClCompile Include="TextureShader.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DxMario.h" />
-    <ClInclude Include="Model.h" />
     <ClInclude Include="ResourceLoader.h" />
+    <ClInclude Include="TextureShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dx.Games\Dx.Games.vcxproj">

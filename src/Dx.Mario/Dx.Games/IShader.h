@@ -3,6 +3,7 @@
 #include <d3dx9.h>
 #include <memory>
 #include "Scene.h"
+#include "Camera.h"
 
 namespace games {
     class IShader

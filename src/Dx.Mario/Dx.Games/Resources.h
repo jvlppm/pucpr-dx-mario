@@ -7,6 +7,7 @@
 #include "mesh.h"
 #include <functional>
 #include "mage/Effect.h"
+#include "IShader.h"
 
 namespace games {
 	class IResourceLoader {
@@ -14,6 +15,7 @@ namespace games {
 		virtual std::shared_ptr<IDirect3DTexture9> loadTexture(IDirect3DDevice9* device, const std::string& name) = 0;
 		virtual std::shared_ptr<Mesh> loadMesh(IDirect3DDevice9* device, const std::string& name) = 0;
 		virtual std::shared_ptr<mage::Effect> loadEffect(IDirect3DDevice9* device, const std::string& name) = 0;
+        virtual std::shared_ptr<IShader> loadShader(IDirect3DDevice9* device, const std::string& name) = 0;
 	};
 
 	class Resources
@@ -23,6 +25,7 @@ namespace games {
 
 		static std::shared_ptr<IDirect3DTexture9> getTexture(IDirect3DDevice9* device, const std::string& name);
 		static std::shared_ptr<Mesh> getMesh(IDirect3DDevice9* device, std::string name);
+        static std::shared_ptr<IShader> getShader(IDirect3DDevice9* device, const std::string& name);
 		static std::shared_ptr<mage::Effect> getEffect(IDirect3DDevice9* device, const std::string& name);
 	private:
 		struct private_implementation;

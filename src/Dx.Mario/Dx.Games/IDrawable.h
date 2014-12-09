@@ -1,10 +1,8 @@
 #pragma once
 #include <memory>
-#include <d3dx9math.h>
-#include <vector>
+#include <d3dx9.h>
 #include "Scene.h"
 #include "Camera.h"
-#include "mage\Effect.h"
 
 namespace games {
 	class IDrawable
@@ -13,11 +11,11 @@ namespace games {
 		IDrawable();
 		~IDrawable();
 
-		virtual bool sortedRendering();
-		virtual void draw(IDirect3DDevice9* device, shared_ptr<Scene> scene, shared_ptr<Camera> camera) = 0;
+		virtual void draw(IDirect3DDevice9* device, std::shared_ptr<Scene> scene, std::shared_ptr<Camera> camera) = 0;
 		virtual D3DXVECTOR3 worldPosition() = 0;
 		virtual D3DXMATRIX world() = 0;
 
+        virtual bool sortedRendering();
 		bool canRender();
 		void setVisible(bool visible);
 	private:

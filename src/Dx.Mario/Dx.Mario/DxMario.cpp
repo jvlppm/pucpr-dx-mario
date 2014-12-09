@@ -1,11 +1,10 @@
 #include "DxMario.h"
-#include "Scene.h"
-#include "Camera.h"
 #include "mage/TString.h"
 #include <memory>
 #include "Resources.h"
 #include "ResourceLoader.h"
 #include "Model.h"
+#include "TextureShader.h"
 
 using namespace mario;
 using namespace games;

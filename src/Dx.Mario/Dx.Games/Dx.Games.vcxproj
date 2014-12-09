@@ -91,9 +91,9 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraVertex.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HResultException.h" />
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IUpdateable.h" />
-    <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelLoadException.h" />

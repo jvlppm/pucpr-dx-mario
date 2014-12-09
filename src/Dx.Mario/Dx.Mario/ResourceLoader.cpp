@@ -5,6 +5,7 @@
 #include "ModelLoadException.h"
 #include "mage/HandleError.h"
 #include "ShaderCompileException.h"
+#include "TextureShader.h"
 
 using namespace mario;
 using namespace games;
@@ -130,4 +131,12 @@ shared_ptr<Mesh> ResourceLoader::loadMesh(IDirect3DDevice9* device, const string
 		}
 	}
 	return mesh;
+}
+
+std::shared_ptr<games::IShader> mario::ResourceLoader::loadShader(IDirect3DDevice9 * device, const std::string & name)
+{
+    if (name == "texture.fx") {
+        return make_shared<TextureShader>();
+    }
+    throw logic_error("Unknown shader " + name);
 }

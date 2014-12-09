@@ -1,17 +1,11 @@
 #pragma once
-#include <string>
-#include <winerror.h>
+#include "HResultException.h"
 
 namespace games {
-	class ModelLoadException
+	class ModelLoadException : public HResultException
 	{
 	public:
-		const std::string message;
-		const HRESULT result;
-
-		ModelLoadException(const std::string& message, HRESULT result) : message(message), result(result) {}
+		ModelLoadException(const std::string& message, HRESULT hr) : HResultException(message, hr) {}
 		~ModelLoadException() { }
-
-		const char* what() const throw() { return message.c_str(); }
 	};
 }
