@@ -12,7 +12,9 @@ using namespace mage;
 using namespace std;
 
 struct DxMario::private_implementation {
-    std::shared_ptr<Scene> scene;
+    shared_ptr<Scene> scene;
+    shared_ptr<Model> skull;
+    shared_ptr<Model> dwarf;
 
     void setup(IDirect3DDevice9* device)
     {
@@ -20,23 +22,31 @@ struct DxMario::private_implementation {
 
         scene = std::make_shared<Scene>();
         scene->diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 0.8f);
-        scene->ambientColor = D3DXVECTOR3(0.4f, 0.4f, 0.4f);
+        scene->ambientColor = D3DXVECTOR3(0.2f, 0.2f, 0.2f);
+        scene->specularColor /= 20;
 
         auto postEffects = make_shared<PostEffects>();
-        postEffects->setEffect("Grayscale");
+        postEffects->setEffect("Edges");
 
         auto camera = scene->add<Camera>()
             ->setPerspective(60, 1, 5000)
-            ->translate(0.0f, 0.0f, -20.0f)
-            ->lookAt(D3DXVECTOR3(0, 0, 0))
+            ->translate(0.0f, 10.0f, -30.0f)
+            ->lookAt(D3DXVECTOR3(0, 6, 0))
             ->setShader(postEffects);
 
-        scene->add<Model>(device, "skullocc.x", "texture.fx");
-        scene->add<Model>(device, "Dwarf.x", "texture.fx")
-            ->scale(8)
-            ->translate(1.0f, -1.0f, 0.0f);
+        skull = scene->add<Model>(device, "skullocc.x", "texture.fx")
+            ->translate(-8.0f, 0, 0);
+        dwarf = scene->add<Model>(device, "Dwarf.x", "texture.fx")
+            ->translate(8.0f, 0, 0)
+            ->scale(8);
 
         scene->init();
+    }
+
+    void update(float time) {
+        skull->rotateY(time);
+        dwarf->rotateY(-time);
+        scene->update(time);
     }
 };
 
@@ -61,7 +71,7 @@ void DxMario::paint(IDirect3DDevice9* device)
 
 bool DxMario::process(float time)
 {
-    pImpl->scene->update(time);
+    pImpl->update(time);
     return true;
 }
 
