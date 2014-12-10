@@ -9,6 +9,7 @@ using namespace std;
 struct PostEffects::private_implementation {
     private_implementation() {
         D3DXMatrixIdentity(&identity);
+        technique = "Default";
     }
 
     ~private_implementation() {
@@ -20,7 +21,7 @@ struct PostEffects::private_implementation {
             this->effect = Resources::getEffect(device, "postEffects.fx");
         }
 
-        this->effect->setTechnique("Default");
+        this->effect->setTechnique(technique);
     }
 
     void end() {
@@ -47,7 +48,12 @@ struct PostEffects::private_implementation {
         effect->execute(drawFunction);
     }
 
+    void setEffect(const string& name) {
+        technique = name;
+    }
+
 private:
+    string technique;
     IDirect3DDevice9* device;
     shared_ptr<Effect> effect;
     D3DXMATRIX identity;
@@ -99,4 +105,9 @@ void PostEffects::setMaterial(D3DMATERIAL9 material)
 void PostEffects::execute(function<void(IDirect3DDevice9*)> drawFunction)
 {
     pImpl->execute(drawFunction);
+}
+
+void PostEffects::setEffect(const string& name)
+{
+    pImpl->setEffect(name);
 }

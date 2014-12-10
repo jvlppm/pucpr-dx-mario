@@ -30,18 +30,45 @@ OutputVS TransformVS(float2 posL : POSITION0, float2 tex0 : TEXCOORD0)
 float4 TransformPS(float2 tex0 : TEXCOORD0) : COLOR
 {
 	return tex2D(gTextureSampler, tex0);
-	//return float4(1, 1, 0, 1);
+}
+
+float4 DarkerPS(float2 tex0 : TEXCOORD0) : COLOR
+{
+    return tex2D(gTextureSampler, tex0) / 4;
+}
+
+float4 InversePS(float2 tex0 : TEXCOORD0) : COLOR
+{
+    float4 color = tex2D(gTextureSampler, tex0);
+    return float4(1-color.r, 1-color.g, 1-color.b, color.a);
 }
 
 technique Default
 {
 	pass P0
 	{
-		// Especifica o vertex e pixel shader associado a essa passada.
 		vertexShader = compile vs_2_0 TransformVS();
 		pixelShader = compile ps_2_0 TransformPS();
-
-		//Especifica o device state associado a essa passada.
-		FillMode = Solid;
+        FillMode = Solid;
 	}
 }
+
+technique Darker
+{
+    pass P0
+    {
+        vertexShader = compile vs_2_0 TransformVS();
+        pixelShader = compile ps_2_0 DarkerPS();
+        FillMode = Solid;
+    }
+};
+
+technique Inverse
+{
+    pass P0
+    {
+        vertexShader = compile vs_2_0 TransformVS();
+        pixelShader = compile ps_2_0 InversePS();
+        FillMode = Solid;
+    }
+};

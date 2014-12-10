@@ -19,6 +19,8 @@ namespace mario {
         virtual void setMaterial(D3DMATERIAL9 material) override;
         virtual void execute(std::function<void(IDirect3DDevice9*)> drawFunction) override;
 
+        void setEffect(const std::string& name);
+
     private:
         struct private_implementation;
         std::unique_ptr<private_implementation> pImpl;
