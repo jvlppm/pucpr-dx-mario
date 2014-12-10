@@ -43,6 +43,13 @@ float4 InversePS(float2 tex0 : TEXCOORD0) : COLOR
     return float4(1-color.r, 1-color.g, 1-color.b, color.a);
 }
 
+float4 GrayscalePS(float2 tex0 : TEXCOORD0) : COLOR
+{
+    float4 color = tex2D(gTextureSampler, tex0);
+    float s = (color.r + color.g + color.b) / 3;
+    return float4(s, s, s, color.a);
+}
+
 technique Default
 {
 	pass P0
@@ -69,6 +76,16 @@ technique Inverse
     {
         vertexShader = compile vs_2_0 TransformVS();
         pixelShader = compile ps_2_0 InversePS();
+        FillMode = Solid;
+    }
+};
+
+technique Grayscale
+{
+    pass P0
+    {
+        vertexShader = compile vs_2_0 TransformVS();
+        pixelShader = compile ps_2_0 GrayscalePS();
         FillMode = Solid;
     }
 };

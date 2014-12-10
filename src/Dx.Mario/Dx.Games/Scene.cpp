@@ -23,6 +23,8 @@ struct Scene::private_implementation {
 
         for (auto camera : *cameras)
         {
+            // TODO: camera->execute(delegate { items -> draw }); // Permitir renderizar a cena em uma outra texture com outro shader (depth pass...)
+
             camera->begin(device, scene);
 
             if (auto lockDrawables = drawables)

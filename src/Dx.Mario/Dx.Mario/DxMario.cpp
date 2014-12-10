@@ -23,7 +23,7 @@ struct DxMario::private_implementation {
         scene->ambientColor = D3DXVECTOR3(0.4f, 0.4f, 0.4f);
 
         auto postEffects = make_shared<PostEffects>();
-        postEffects->setEffect("Inverse");
+        postEffects->setEffect("Grayscale");
 
         auto camera = scene->add<Camera>()
             ->setPerspective(60, 1, 5000)
