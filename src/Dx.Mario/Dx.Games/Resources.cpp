@@ -16,8 +16,6 @@ struct Resources::private_implementation {
 	MeshMap meshes;
 	typedef map<string, shared_ptr<mage::Effect>> EffectMap;
 	EffectMap effects;
-    typedef map<string, shared_ptr<IShader>> ShaderMap;
-    ShaderMap shaders;
 
 	shared_ptr<IResourceLoader> getLoader() {
 		shared_ptr<IResourceLoader> loader = this->loader;
@@ -41,10 +39,7 @@ struct Resources::private_implementation {
 	}
 
 	shared_ptr<IShader> getShader(IDirect3DDevice9* device, const string& name) {
-        auto loader = getLoader();
-        return getData<IShader>(name, shaders, [loader, device](const string& name) {
-            return loader->loadShader(device, name);
-        });
+        return loader->loadShader(device, name);
     }
 
     shared_ptr<mage::Effect> getEffect(IDirect3DDevice9* device, const string& name) {

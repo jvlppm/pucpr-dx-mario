@@ -22,10 +22,10 @@ struct DxMario::private_implementation {
 		scene->diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 0.8f);
 		scene->ambientColor = D3DXVECTOR3(0.4f, 0.4f, 0.4f);
 
-		auto camera = scene->add<Camera>();
-		camera->translate(0.0f, 0.0f, -20.0f);
-		camera->setPerspective(60, 1, 5000);
-		camera->lookAt(D3DXVECTOR3(0, 0, 0));
+		auto camera = scene->add<Camera>(device, "postEffects.fx")
+            ->setPerspective(60, 1, 5000)
+		    ->translate(0.0f, 0.0f, -20.0f)
+		    ->lookAt(D3DXVECTOR3(0, 0, 0));
 
 		scene->add<Model>(device, "skullocc.x", "texture.fx");
 		scene->add<Model>(device, "Dwarf.x", "texture.fx")

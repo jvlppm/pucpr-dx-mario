@@ -19,8 +19,7 @@ struct Scene::private_implementation {
 
     void draw(IDirect3DDevice9* device, shared_ptr<Scene> scene) {
         using namespace cpplinq;
-        IDirect3DSurface9* pBackBuffer;
-        device->GetRenderTarget(0, &pBackBuffer);
+        device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, backBufferClearColor, 1.0f, 0);
 
         for (auto camera : *cameras)
         {
@@ -44,9 +43,6 @@ struct Scene::private_implementation {
             camera->end(device);
         }
 
-        device->SetRenderTarget(0, pBackBuffer);
-
-        device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, backBufferClearColor, 1.0f, 0);
         device->BeginScene();
         for (auto camera : *cameras)
             camera->draw(device);

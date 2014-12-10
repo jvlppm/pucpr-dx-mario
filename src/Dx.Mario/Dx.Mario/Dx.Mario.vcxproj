@@ -75,12 +75,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DxMario.cpp" />
+    <ClCompile Include="PostEffects.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
     <ClCompile Include="TextureShader.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DxMario.h" />
+    <ClInclude Include="PostEffects.h" />
     <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="TextureShader.h" />
   </ItemGroup>
@@ -99,7 +101,7 @@
     <None Include="Resources\skullocc.x" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Resources\camera.fx">
+    <FxCompile Include="Resources\postEffects.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">2.0</ShaderModel>
     </FxCompile>

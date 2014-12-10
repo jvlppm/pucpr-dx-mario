@@ -37,11 +37,11 @@ technique Default
 {
 	pass P0
 	{
-		// Especifica o vertex e pixel shader associado a essa passada.            
+		// Especifica o vertex e pixel shader associado a essa passada.
 		vertexShader = compile vs_2_0 TransformVS();
 		pixelShader = compile ps_2_0 TransformPS();
 
-		//Especifica o device state associado a essa passada. 
+		//Especifica o device state associado a essa passada.
 		FillMode = Solid;
 	}
 }

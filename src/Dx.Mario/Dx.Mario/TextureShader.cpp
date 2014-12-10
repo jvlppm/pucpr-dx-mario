@@ -8,6 +8,7 @@ using namespace std;
 
 struct TextureShader::private_implementation {
     private_implementation() {
+        D3DXMatrixIdentity(&identity);
     }
 
     ~private_implementation() {
@@ -17,12 +18,19 @@ struct TextureShader::private_implementation {
         if (this->device != device) {
             this->device = device;
             this->effect = Resources::getEffect(device, "texture.fx");
+
         }
 
         this->effect->setTechnique("PhongTech");
     }
 
     void end() {
+        effect->setMatrix("gWorld", identity);
+        effect->setMatrix("gView", identity);
+        effect->setMatrix("gProjection", identity);
+        effect->setColor("gAmbientColor", D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+        effect->setColor("gDiffuseColor", D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+        effect->setColor("gSpecularColor", D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
     }
 
     void setScene(shared_ptr<Scene> scene) {
@@ -54,12 +62,14 @@ struct TextureShader::private_implementation {
     }
 
     void execute(function<void(IDirect3DDevice9*)> drawFunction) {
+        effect->commit();
         effect->execute(drawFunction);
     }
 
 private:
     IDirect3DDevice9* device;
     shared_ptr<Effect> effect;
+    D3DXMATRIX identity;
 };
 
 TextureShader::TextureShader() : pImpl(new TextureShader::private_implementation())

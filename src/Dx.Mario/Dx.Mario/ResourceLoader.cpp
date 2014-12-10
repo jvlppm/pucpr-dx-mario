@@ -6,6 +6,7 @@
 #include "mage/HandleError.h"
 #include "ShaderCompileException.h"
 #include "TextureShader.h"
+#include "PostEffects.h"
 
 using namespace mario;
 using namespace games;
@@ -137,6 +138,9 @@ std::shared_ptr<games::IShader> mario::ResourceLoader::loadShader(IDirect3DDevic
 {
     if (name == "texture.fx") {
         return make_shared<TextureShader>();
+    }
+    if (name == "postEffects.fx") {
+        return make_shared<PostEffects>();
     }
     throw logic_error("Unknown shader " + name);
 }

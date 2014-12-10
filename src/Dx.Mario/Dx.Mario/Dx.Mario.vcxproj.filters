@@ -27,6 +27,9 @@
     <ClCompile Include="TextureShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PostEffects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DxMario.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TextureShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PostEffects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -51,7 +57,7 @@
     <FxCompile Include="Resources\texture.fx">
       <Filter>Resource Files</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\camera.fx">
+    <FxCompile Include="Resources\postEffects.fx">
       <Filter>Resource Files</Filter>
     </FxCompile>
   </ItemGroup>

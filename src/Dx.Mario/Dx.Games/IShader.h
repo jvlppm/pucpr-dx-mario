@@ -6,6 +6,10 @@
 #include "Camera.h"
 
 namespace games {
+    class Camera;
+    class Scene;
+    class BaseObject;
+
     class IShader
     {
     public:
