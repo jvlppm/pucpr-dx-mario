@@ -19,9 +19,11 @@ struct TextureShader::private_implementation {
             this->device = device;
             this->effect = Resources::getEffect(device, "texture.fx");
 
+            this->toonDiffuser = Resources::getTexture(device, "ToonDiffuser.bmp");
+            this->effect->setTexture("gDiffuserTexture", this->toonDiffuser.get());
         }
 
-        this->effect->setTechnique("PhongTech");
+        this->effect->setTechnique("Toon");
     }
 
     void end() {
@@ -48,6 +50,10 @@ struct TextureShader::private_implementation {
 
     void setObject(shared_ptr<BaseObject> object) {
         effect->setMatrix("gWorld", object->world());
+
+        D3DXMATRIX inverseWorld;
+        D3DXMatrixInverse(&inverseWorld, nullptr, &object->world());
+        this->effect->setMatrix("gInverseWorld", inverseWorld);
     }
 
     void setTexture(shared_ptr<IDirect3DTexture9> texture) {
@@ -69,6 +75,7 @@ struct TextureShader::private_implementation {
 private:
     IDirect3DDevice9* device;
     shared_ptr<Effect> effect;
+    shared_ptr<IDirect3DTexture9> toonDiffuser;
     D3DXMATRIX identity;
 };
 

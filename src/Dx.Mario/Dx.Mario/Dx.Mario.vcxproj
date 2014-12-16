@@ -104,6 +104,7 @@
     <FxCompile Include="Resources\postEffects.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">2.0</ShaderModel>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\texture.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
@@ -116,6 +117,7 @@
     <Image Include="Resources\DwarfHead.dds" />
     <Image Include="Resources\Headgear.dds" />
     <Image Include="Resources\Pack.dds" />
+    <Image Include="Resources\ToonDiffuser.bmp" />
     <Image Include="Resources\Weapons.dds" />
     <Image Include="Resources\whitetex.dds" />
   </ItemGroup>

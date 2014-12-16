@@ -21,14 +21,12 @@ struct Scene::private_implementation {
         using namespace cpplinq;
         device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, backBufferClearColor, 1.0f, 0);
 
-        for (auto camera : *cameras)
+        if (auto lockDrawables = drawables)
         {
-            // TODO: camera->execute(delegate { items -> draw }); // Permitir renderizar a cena em uma outra texture com outro shader (depth pass...)
-
-            camera->begin(device, scene);
-
-            if (auto lockDrawables = drawables)
+            for (auto camera : *cameras)
             {
+                camera->begin(device, scene);
+
                 auto items = from_iterators(lockDrawables->begin(), lockDrawables->end())
                     >> to_lookup([](shared_ptr<IDrawable> i) { return i->sortedRendering(); });
 
@@ -40,9 +38,9 @@ struct Scene::private_implementation {
                 items[false] >> concat(orderedItems) >> for_each([&](shared_ptr<IDrawable> i) {
                     i->draw(device, scene, camera);
                 });
-            }
 
-            camera->end(device);
+                camera->end(device);
+            }
         }
 
         device->BeginScene();

@@ -83,5 +83,8 @@
     <Image Include="Resources\DwarfHead.dds">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resources\ToonDiffuser.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

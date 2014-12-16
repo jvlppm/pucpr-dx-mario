@@ -28,24 +28,28 @@ struct DxMario::private_implementation {
         auto postEffects = make_shared<PostEffects>();
         postEffects->setEffect("Edges");
 
-        auto camera = scene->add<Camera>()
-            ->setPerspective(60, 1, 5000)
-            ->translate(0.0f, 10.0f, -30.0f)
-            ->lookAt(D3DXVECTOR3(0, 6, 0))
-            ->setShader(postEffects);
+		auto camera = scene->add<Camera>()
+			->setPerspective(60, 1, 5000)
+			->translate(0.0f, 4.0f, -10.0f)
+			->lookAt(D3DXVECTOR3(0, 6, 0))
+            ->setShader(postEffects)
+			;
 
-        skull = scene->add<Model>(device, "skullocc.x", "texture.fx")
-            ->translate(-8.0f, 0, 0);
+		skull = scene->add<Model>(device, "skullocc.x", "texture.fx")
+            ->translate(3, 2, 0)
+			->scale(0.6f);
         dwarf = scene->add<Model>(device, "Dwarf.x", "texture.fx")
-            ->translate(8.0f, 0, 0)
-            ->scale(8);
+            ->translate(-3, 2, 0)
+            ->scale(4);
 
         scene->init();
     }
 
     void update(float time) {
-        skull->rotateY(time);
-        dwarf->rotateY(-time);
+		if (skull)
+			skull->rotateY(time);
+		if (dwarf)
+			dwarf->rotateY(-time);
         scene->update(time);
     }
 };
