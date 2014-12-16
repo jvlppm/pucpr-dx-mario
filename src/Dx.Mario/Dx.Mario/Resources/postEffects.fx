@@ -90,10 +90,10 @@ technique Grayscale
     }
 };
 
-float4 EdgesPS(float2 tex0 : TEXCOORD0) : COLOR
+float4 SobelPS(float2 tex0 : TEXCOORD0) : COLOR
 {
     const int NUM = 9;
-    const float threshold = 1;
+    const float threshold = 2;
 
     const float2 c[NUM] = {
         float2(-0.0078125, 0.0078125),
@@ -111,23 +111,23 @@ float4 EdgesPS(float2 tex0 : TEXCOORD0) : COLOR
     int i;
 
     for (i = 0; i < NUM; i++) {
-        col[i] = tex2D(gTextureSampler, tex0 + c[i] / 8.0);
+        col[i] = tex2D(gTextureSampler, tex0 + c[i] / 50);
     }
 
-    float3 rgb2lum = float3(0.2f, 0.2f, 0.2f);
+    //float3 rgb2lum = float3(0.30, 0.59, 0.11);
 
     float lum[NUM];
     for (i = 0; i < NUM; i++) {
-        lum[i] = dot(col[i].xyz, rgb2lum);
+        lum[i] = (col[i].x + col[i].y + col[i].z) / 3 ;// dot(col[i].xyz, rgb2lum);
     }
 
-    float x = lum[2] + lum[8] + 2 * lum[5] - lum[0] - 2 * lum[3] - lum[6];
-    float y = lum[6] + 2 * lum[7] + lum[8] - lum[0] - 2 * lum[1] - lum[2];
+    float x = lum[1] + 2 * lum[2] - lum[3] + lum[5] - 2 * lum[5] - lum[6];
+    float y = -2* lum[0] - lum[1] - lum[3] + lum[5] + lum[7] + 2* lum[8];
 
     float edge = ((x*x + y*y) / threshold) * 4;
     //edge = edge > 0.5f ? edge : 0;
 
-    return float4(col[4] - edge.xxx, 1.0);
+    return float4(col[4] - (edge.xxx), 1.0);
 }
 
 technique Edges
@@ -135,7 +135,7 @@ technique Edges
     pass P0
     {
         vertexShader = compile vs_2_0 TransformVS();
-        pixelShader = compile ps_2_0 EdgesPS();
+        pixelShader = compile ps_2_0 SobelPS();
         FillMode = Solid;
     }
 };
