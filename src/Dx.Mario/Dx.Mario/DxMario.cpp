@@ -26,7 +26,7 @@ struct DxMario::private_implementation {
         scene->specularColor /= 20;
 
         auto postEffects = make_shared<PostEffects>();
-        postEffects->setEffect("Edges");
+        postEffects->setEffect("Toon");
 
 		auto camera = scene->add<Camera>()
 			->setPerspective(60, 1, 5000)

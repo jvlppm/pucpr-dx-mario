@@ -19,6 +19,9 @@ struct PostEffects::private_implementation {
         if (this->device != device) {
             this->device = device;
             this->effect = Resources::getEffect(device, "postEffects.fx");
+
+            this->toonDiffuser = Resources::getTexture(device, "ToonLightTexture.bmp");
+            this->effect->setTexture("gToonLightTexture", this->toonDiffuser.get());
         }
 
         this->effect->setTechnique(technique);
@@ -56,6 +59,7 @@ private:
     string technique;
     IDirect3DDevice9* device;
     shared_ptr<Effect> effect;
+    shared_ptr<IDirect3DTexture9> toonDiffuser;
     D3DXMATRIX identity;
 };
 

@@ -117,7 +117,7 @@
     <Image Include="Resources\DwarfHead.dds" />
     <Image Include="Resources\Headgear.dds" />
     <Image Include="Resources\Pack.dds" />
-    <Image Include="Resources\ToonDiffuser.bmp" />
+    <Image Include="Resources\ToonLightTexture.bmp" />
     <Image Include="Resources\Weapons.dds" />
     <Image Include="Resources\whitetex.dds" />
   </ItemGroup>
