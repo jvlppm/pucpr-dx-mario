@@ -82,7 +82,7 @@ D3DXMATRIX BaseObject::world()
 void BaseObject::updateTransform()
 {
 	if (auto parent = parent_ref.lock())
-		globalTransform = parent->world() * localTransform;
+		globalTransform = localTransform * parent->world();
 	else
 		globalTransform = localTransform;
 
