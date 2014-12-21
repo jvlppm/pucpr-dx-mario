@@ -218,7 +218,7 @@ float4 ToonPS(float2 tex0: TEXCOORD0) : COLOR
     float4 toon = ToonColor(original);
     float4 border = SobelPS(tex0);
 
-    return (toon - border);
+    return (toon - border * 2);
 }
 
 technique Toon
@@ -229,6 +229,26 @@ technique Toon
 
         // ps_2_0 limita número de instruções, impedindo que conversões de cores sejam aplicadas facilmente
         pixelShader = compile ps_3_0 ToonPS();
+        FillMode = Solid;
+    }
+};
+
+/////////////////////////
+// Borders
+/////////////////////////
+
+float4 BordersPS(float2 tex0: TEXCOORD0) : COLOR
+{
+    float4 border = SobelPS(tex0);
+    return (1 - border * 4);
+}
+
+technique Borders
+{
+    pass P0
+    {
+        vertexShader = compile vs_2_0 TransformVS();
+        pixelShader = compile ps_2_0 BordersPS();
         FillMode = Solid;
     }
 };

@@ -97,6 +97,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.x" />
     <None Include="Resources\Dwarf.x" />
     <None Include="Resources\Luigi.x" />
     <None Include="Resources\Mario.x" />
@@ -114,6 +115,33 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastMS10.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS00.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS01.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS02.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS03.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS04.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS05.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS06.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS07.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS08.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS09.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS11.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS12.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS13.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS14.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS15.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS16.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS17.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS18.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS19.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS20.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS21.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS22.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS23.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS24.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS25.BMP" />
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS26.BMP" />
     <Image Include="Resources\Armor.dds" />
     <Image Include="Resources\Body.dds" />
     <Image Include="Resources\DwarfHead.dds" />

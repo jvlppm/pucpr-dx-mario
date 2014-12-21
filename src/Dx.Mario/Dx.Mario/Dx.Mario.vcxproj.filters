@@ -58,6 +58,9 @@
     <None Include="Resources\Mario.x">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.x">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\texture.fx">
@@ -120,6 +123,87 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Resources\pc01_eye.1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastMS10.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS00.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS01.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS02.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS03.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS04.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS05.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS06.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS07.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS08.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS09.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS11.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS12.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS13.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS14.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS15.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS16.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS17.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS18.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS19.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS20.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS21.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS22.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS23.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS24.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS25.BMP">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\JoãoVitor\Downloads\Peachs_Castle_X\X\Peach%27s Castle.xCastSS26.BMP">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

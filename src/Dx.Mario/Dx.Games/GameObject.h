@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseObject.h"
+#include <d3dx9.h>
 
 namespace games {
 
@@ -17,6 +18,10 @@ namespace games {
 			BaseObject::transform(func);
 			return shared_from_this();
 		}
+
+        std::shared_ptr<Type> translate(const D3DXVECTOR3& v) {
+            return transform([v](D3DXMATRIX& m) { D3DXMatrixTranslation(&m, v.x, v.y, v.z); });
+        }
 
 		std::shared_ptr<Type> translate(float x, float y, float z) {
 			return transform([x, y, z](D3DXMATRIX& m) { D3DXMatrixTranslation(&m, x, y, z); });
