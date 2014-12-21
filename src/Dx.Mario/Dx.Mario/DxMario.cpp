@@ -13,16 +13,16 @@ using namespace std;
 
 struct DxMario::private_implementation {
     shared_ptr<Scene> scene;
-    shared_ptr<Model> skull;
-    shared_ptr<Model> dwarf;
+    shared_ptr<Model> mario;
+    shared_ptr<Model> luigi;
 
     void setup(IDirect3DDevice9* device)
     {
         Resources::setLoader(make_shared<ResourceLoader>());
 
         scene = std::make_shared<Scene>();
-        scene->diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 0.8f);
-        scene->ambientColor = D3DXVECTOR3(0.2f, 0.2f, 0.2f);
+        scene->diffuseColor *= 1.5;
+        D3DXVec3Normalize(&scene->lightDir, &scene->lightDir);
         scene->specularColor /= 20;
 
         auto postEffects = make_shared<PostEffects>();
@@ -30,26 +30,28 @@ struct DxMario::private_implementation {
 
 		auto camera = scene->add<Camera>()
 			->setPerspective(60, 1, 5000)
-			->translate(0.0f, 4.0f, -10.0f)
-			->lookAt(D3DXVECTOR3(0, 6, 0))
+			->translate(0.0f, 6.0f, -10.0f)
+			->lookAt(D3DXVECTOR3(0, 2, 0))
             ->setShader(postEffects)
 			;
 
-		skull = scene->add<Model>(device, "skullocc.x", "texture.fx")
-            ->translate(3, 2, 0)
-			->scale(0.6f);
-        dwarf = scene->add<Model>(device, "Dwarf.x", "texture.fx")
-            ->translate(-3, 2, 0)
-            ->scale(4);
+		
+        luigi = scene->add<Model>(device, "Luigi.x", "texture.fx")
+             ->scale(0.4f)
+             ->translate(-6, -2, 0);
+
+        mario = scene->add<Model>(device, "Mario.x", "texture.fx")
+            ->scale(0.4f)
+            ->translate(6, -2, 0);
 
         scene->init();
     }
 
     void update(float time) {
-		if (skull)
-			skull->rotateY(time);
-		if (dwarf)
-			dwarf->rotateY(-time);
+		if (luigi)
+			luigi->rotateY(time);
+        if (mario)
+            mario->rotateY(-time);
         scene->update(time);
     }
 };

@@ -54,9 +54,11 @@ shared_ptr<Mesh> ResourceLoader::loadMesh(IDirect3DDevice9* device, const string
 	ID3DXBuffer* mtrlBuffer = nullptr;
 	DWORD numMaterials;
 
-	if (int loadError = D3DXLoadMeshFromX(wideFileName.c_str(), D3DXMESH_SYSTEMMEM,
-		device, &adjBuffer, &mtrlBuffer, 0, &numMaterials, &meshSys))
-		throw ModelLoadException("Failed to load mesh from X.", loadError);
+    if (int loadError = D3DXLoadMeshFromX(wideFileName.c_str(), D3DXMESH_SYSTEMMEM,
+        device, &adjBuffer, &mtrlBuffer, 0, &numMaterials, &meshSys)) {
+        HR(loadError);
+        throw ModelLoadException("Failed to load mesh from X.", loadError);
+    }
 
 	//Passo 2: Descobrir se a mesh tem normais de luz
 	D3DVERTEXELEMENT9 elems[MAX_FVF_DECL_SIZE];

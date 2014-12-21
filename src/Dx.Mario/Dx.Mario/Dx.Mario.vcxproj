@@ -98,6 +98,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Dwarf.x" />
+    <None Include="Resources\Luigi.x" />
+    <None Include="Resources\Mario.x" />
     <None Include="Resources\skullocc.x" />
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +119,16 @@
     <Image Include="Resources\DwarfHead.dds" />
     <Image Include="Resources\Headgear.dds" />
     <Image Include="Resources\Pack.dds" />
+    <Image Include="Resources\pc01_body_m1.png" />
+    <Image Include="Resources\pc01_eye.0.png" />
+    <Image Include="Resources\pc01_eye.1.png" />
+    <Image Include="Resources\pc01_eye.2.png" />
+    <Image Include="Resources\pc01_face_m1.png" />
+    <Image Include="Resources\pc02_body_m1.png" />
+    <Image Include="Resources\pc02_eye.0.png" />
+    <Image Include="Resources\pc02_eye.1.png" />
+    <Image Include="Resources\pc02_eye.2.png" />
+    <Image Include="Resources\pc02_face_m1.png" />
     <Image Include="Resources\ToonLightTexture.bmp" />
     <Image Include="Resources\Weapons.dds" />
     <Image Include="Resources\whitetex.dds" />

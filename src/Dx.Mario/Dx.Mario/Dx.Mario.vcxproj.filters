@@ -52,6 +52,12 @@
     <None Include="Resources\Dwarf.x">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Resources\Luigi.x">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Mario.x">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\texture.fx">
@@ -84,6 +90,36 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Resources\ToonLightTexture.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\pc02_body_m1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\pc02_eye.0.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\pc02_eye.1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\pc02_eye.2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\pc02_face_m1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\pc01_eye.2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\pc01_face_m1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\pc01_body_m1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\pc01_eye.0.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\pc01_eye.1.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
