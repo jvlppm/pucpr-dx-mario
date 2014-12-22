@@ -13,28 +13,33 @@ using namespace mage;
 using namespace std;
 
 struct DxMario::private_implementation {
+    shared_ptr<PostEffects> postEffects;
     shared_ptr<Scene> scene;
     shared_ptr<Model> castle;
     shared_ptr<Container> mario;
     shared_ptr<Container> luigi;
     shared_ptr<Camera> camera;
+    IDirect3DDevice9* device;
+    int effectCount = 0;
+    int modelCount = 0;
 
     D3DXVECTOR3 toMove = D3DXVECTOR3(0, 0, 0);
     D3DXVECTOR3 toMoveCam = D3DXVECTOR3(0, 0, 0);
 
     void setup(IDirect3DDevice9* device)
     {
+        this->device = device;
         Resources::setLoader(make_shared<ResourceLoader>());
 
         createScene(device);
 
-        auto postEffects = make_shared<PostEffects>();
-        //postEffects->setEffect("Borders");
-        postEffects->setEffect("Toon");
+        postEffects = make_shared<PostEffects>();
+        applyEffect(0);
+
         camera = scene->add<Camera>()
             ->setPerspective(60, 1, 5000)
             ->translate(-48, 11, -67)
-            ->lookAt(mario->worldPosition())
+            ->lookAt(mario->worldPosition() + D3DXVECTOR3(0, 2, 0))
             ->setShader(postEffects);
 
         scene->lightDir = mario->worldPosition() - camera->worldPosition();
@@ -46,7 +51,6 @@ struct DxMario::private_implementation {
 
     void createScene(IDirect3DDevice9* device) {
         scene = std::make_shared<Scene>();
-        scene->diffuseColor *= 1.5;
         scene->specularColor /= 20;
 
         castle = scene->add<Model>(device, "Peach's Castle.x", "texture.fx")
@@ -81,38 +85,16 @@ struct DxMario::private_implementation {
         switch (evt.type) {
         case WM_KEYDOWN:
             switch (evt.wParam) {
-                case 'A':
-                    toMove.x += 1;
-                    break;
-                case 'D':
-                    toMove.x -= 1;
-                    break;
-                case 'W':
-                    toMove.z -= 1;
-                    break;
-                case 'S':
-                    toMove.z += 1;
-                    break;
                 case VK_SPACE:
-                    toMove.y += 1;
-                    toMoveCam.y += 1;
-                    break;
-                case VK_CONTROL:
-                    toMove.y -= 1;
-                    toMoveCam.y -= 1;
-                    break;
-
-                case VK_UP:
-                    toMoveCam.x += 1;
-                    break;
-                case VK_DOWN:
-                    toMoveCam.x -= 1;
-                    break;
-                case VK_LEFT:
-                    toMoveCam.z -= 1;
+                    effectCount = (effectCount + 1) % 5;
+                    applyEffect(effectCount);
                     break;
                 case VK_RIGHT:
-                    toMoveCam.z += 1;
+                    selectModel(modelCount + 1);
+                    break;
+
+                case VK_LEFT:
+                    selectModel(modelCount - 1);
                     break;
             }
             break;
@@ -124,6 +106,58 @@ struct DxMario::private_implementation {
 
         if (toMoveCam.x || toMoveCam.y || toMoveCam.z) {
             D3DXVec3Normalize(&toMoveCam, &toMoveCam);
+        }
+    }
+
+    void applyEffect(int effect) {
+        switch (effect) {
+        case 0:
+            scene->diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 0.8f);
+            postEffects->setEffect("Toon");
+            break;
+        case 1:
+            scene->diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+            postEffects->setEffect("Default");
+            break;
+        case 2:
+            scene->diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+            postEffects->setEffect("Borders");
+            break;
+        case 3:
+            scene->diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+            postEffects->setEffect("Grayscale");
+            break;
+        case 4:
+            scene->diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+            postEffects->setEffect("Inverse");
+            break;
+        }
+    }
+
+    void selectModel(int model) {
+        modelCount = (model + 4) % 4;
+
+        auto oldModel = mario->findChildren<Model>();
+        if(oldModel.size())
+            oldModel[0]->destroy();
+
+        switch (modelCount) {
+        case 0:
+            mario->add<Model>(device, "Mario.x", "texture.fx")
+                ->scale(0.2f)->init();
+            break;
+        case 1:
+            mario->add<Model>(device, "Luigi.x", "texture.fx")
+                ->scale(0.2f)->init();
+            break;
+        case 2:
+            mario->add<Model>(device, "skullocc.x", "texture.fx")
+                ->scale(0.3)->init();
+            break;
+        case 3:
+            mario->add<Model>(device, "Dwarf.x", "texture.fx")
+                ->scale(4)->init();
+            break;
         }
     }
 };
