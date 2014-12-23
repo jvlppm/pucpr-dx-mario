@@ -61,8 +61,8 @@ struct DxMario::private_implementation {
         luigi = scene->add<Container>()
             ->translate(-56, 8.30, -68)
             ->rotateY(1);
-        luigi->add<Model>(device, "dwarf.x", "texture.fx")
-            ->scale(2);
+        luigi->add<Model>(device, "Luigi.x", "texture.fx")
+            ->scale(0.2);
 
         mario = scene->add<Container>()
             ->translate(-56, 8, -64)
@@ -88,7 +88,7 @@ struct DxMario::private_implementation {
         case WM_KEYDOWN:
             switch (evt.wParam) {
                 case VK_SPACE:
-                    scene->fogDistance = scene->fogDistance > 0 ? 0 : 50;
+                    scene->fog = scene->fog.enabled? Fog::Disabled : Fog(10, 200);
                     break;
 
                 case VK_UP:

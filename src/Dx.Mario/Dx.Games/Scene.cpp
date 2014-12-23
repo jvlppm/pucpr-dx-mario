@@ -85,9 +85,8 @@ private:
     ImmutableList<shared_ptr<IUpdateable>> updateables;
 };
 
-Scene::Scene() : pImpl(new Scene::private_implementation())
+Scene::Scene() : pImpl(new Scene::private_implementation()), fog(Fog::Disabled)
 {
-    fogDistance = 0;
     clearColor = D3DXCOLOR(101 / 255.f, 156 / 255.f, 239 / 255.f, 1);
     ambientColor = D3DXVECTOR3(0.2f, 0.2f, 0.2f);
     diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 1.0f);

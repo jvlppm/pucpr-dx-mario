@@ -14,7 +14,10 @@ uniform extern float4 gAmbientColor;
 uniform extern float4 gDiffuseColor;
 uniform extern float4 gSpecularColor;
 
-uniform extern float gFogDist;
+uniform extern float gFogEnabled;
+uniform extern float gFogStart;
+uniform extern float gFogEnd;
+uniform extern float4 gFogColor;
 
 // material
 uniform extern float4 gAmbientMaterial;
@@ -100,10 +103,10 @@ float4 TransformPS(float2 tex0 : TEXCOORD0, float3 N : TEXCOORD1, float3 V : TEX
     float3 lighting = (ambient.rgb + diffuse.rgb) * tex2D(TesS, tex0).rgb;
 
     float4 color = saturate(float4(lighting + specular.rgb, gAmbientMaterial.a));
-    if (gFogDist > 0) {
-        float3 fog = clamp(length(V) / gFogDist, 0, 1);
-        color.rgb = lerp(color.rgb, fog, 0.3);
-    }
+
+    float3 fog = clamp((length(V) - gFogStart) / (gFogEnd - gFogStart), 0, 1) * gFogEnabled;
+    color.rgb = lerp(color.rgb, gFogColor, fog);
+
     return color;
 }
 

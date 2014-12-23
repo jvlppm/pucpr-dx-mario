@@ -30,6 +30,7 @@ struct TextureShader::private_implementation {
         effect->setColor("gAmbientColor", D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
         effect->setColor("gDiffuseColor", D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
         effect->setColor("gSpecularColor", D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+        effect->setFloat("gFogEnabled", 0);
     }
 
     void setScene(shared_ptr<Scene> scene) {
@@ -37,7 +38,10 @@ struct TextureShader::private_implementation {
         effect->setVector("gAmbientColor", scene->ambientColor);
         effect->setVector("gDiffuseColor", scene->diffuseColor);
         effect->setVector("gSpecularColor", scene->specularColor);
-        effect->setFloat("gFogDist", scene->fogDistance);
+        effect->setFloat("gFogEnabled", scene->fog.enabled? 1 : 0);
+        effect->setFloat("gFogStart", scene->fog.minDistance);
+        effect->setFloat("gFogEnd", scene->fog.maxDistance);
+        effect->setColor("gFogColor", scene->fog.color);
     }
 
     void setCamera(shared_ptr<Camera> camera) {

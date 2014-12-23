@@ -2,6 +2,7 @@
 #include <d3d9.h>
 #include <memory>
 #include "GameObject.h"
+#include "Fog.h"
 
 namespace games {
 	class Scene : public GameObject<Scene>
@@ -19,7 +20,7 @@ namespace games {
 		D3DXVECTOR3 ambientColor;
 		D3DXVECTOR3 diffuseColor;
 		D3DXVECTOR3 specularColor;
-        float fogDistance;
+        Fog fog;
 	private:
 		struct private_implementation;
 		std::unique_ptr<private_implementation> pImpl;
