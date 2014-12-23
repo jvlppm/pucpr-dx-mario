@@ -14,6 +14,8 @@ uniform extern float4 gAmbientColor;
 uniform extern float4 gDiffuseColor;
 uniform extern float4 gSpecularColor;
 
+uniform extern float gFogDist;
+
 // material
 uniform extern float4 gAmbientMaterial;
 uniform extern float4 gDiffuseMaterial;
@@ -96,7 +98,13 @@ float4 TransformPS(float2 tex0 : TEXCOORD0, float3 N : TEXCOORD1, float3 V : TEX
 
     //Soma das luzes
     float3 lighting = (ambient.rgb + diffuse.rgb) * tex2D(TesS, tex0).rgb;
-    return saturate(float4(lighting + specular.rgb, gAmbientMaterial.a));
+
+    float4 color = saturate(float4(lighting + specular.rgb, gAmbientMaterial.a));
+    if (gFogDist > 0) {
+        float3 fog = clamp(length(V) / gFogDist, 0, 1);
+        color.rgb = lerp(color.rgb, fog, 0.3);
+    }
+    return color;
 }
 
 technique PhongTech

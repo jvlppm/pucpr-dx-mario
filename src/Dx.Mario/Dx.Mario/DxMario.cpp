@@ -87,6 +87,10 @@ struct DxMario::private_implementation {
         switch (evt.type) {
         case WM_KEYDOWN:
             switch (evt.wParam) {
+                case VK_SPACE:
+                    scene->fogDistance = scene->fogDistance > 0 ? 0 : 50;
+                    break;
+
                 case VK_UP:
                     applyEffect(effectCount + 1);
                     break;

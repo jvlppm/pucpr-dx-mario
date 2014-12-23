@@ -37,6 +37,7 @@ struct TextureShader::private_implementation {
         effect->setVector("gAmbientColor", scene->ambientColor);
         effect->setVector("gDiffuseColor", scene->diffuseColor);
         effect->setVector("gSpecularColor", scene->specularColor);
+        effect->setFloat("gFogDist", scene->fogDistance);
     }
 
     void setCamera(shared_ptr<Camera> camera) {

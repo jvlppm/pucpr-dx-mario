@@ -19,6 +19,7 @@ namespace games {
 		D3DXVECTOR3 ambientColor;
 		D3DXVECTOR3 diffuseColor;
 		D3DXVECTOR3 specularColor;
+        float fogDistance;
 	private:
 		struct private_implementation;
 		std::unique_ptr<private_implementation> pImpl;
