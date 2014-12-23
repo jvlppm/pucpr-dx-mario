@@ -103,6 +103,7 @@
     <ClInclude Include="ImmutableList.h" />
     <ClInclude Include="IShader.h" />
     <ClInclude Include="ShaderCompileException.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +114,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>

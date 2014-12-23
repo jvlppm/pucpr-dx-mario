@@ -4,6 +4,7 @@
 #include "Resources.h"
 #include "ResourceLoader.h"
 #include "Model.h"
+#include "Text.h"
 #include "Container.h"
 #include "PostEffects.h"
 
@@ -47,6 +48,7 @@ struct DxMario::private_implementation {
         D3DXVec3Normalize(&scene->lightDir, &scene->lightDir);
 
         scene->init();
+        selectModel(0);
     }
 
     void createScene(IDirect3DDevice9* device) {
@@ -57,16 +59,16 @@ struct DxMario::private_implementation {
             ->scale(0.01f);
 
         luigi = scene->add<Container>()
-            ->translate(-56, 8.25, -68)
+            ->translate(-56, 8.30, -68)
             ->rotateY(1);
-        luigi->add<Model>(device, "Luigi.x", "texture.fx")
-            ->scale(0.2f);
+        luigi->add<Model>(device, "dwarf.x", "texture.fx")
+            ->scale(2);
 
         mario = scene->add<Container>()
             ->translate(-56, 8, -64)
             ->rotateY(-1.2);
-        mario->add<Model>(device, "Mario.x", "texture.fx")
-            ->scale(0.2f);
+
+        scene->add<Text>("Change model: RIGHT\nChange effect: UP", 23);
     }
 
     void update(float time) {
@@ -85,9 +87,11 @@ struct DxMario::private_implementation {
         switch (evt.type) {
         case WM_KEYDOWN:
             switch (evt.wParam) {
-                case VK_SPACE:
-                    effectCount = (effectCount + 1) % 5;
-                    applyEffect(effectCount);
+                case VK_UP:
+                    applyEffect(effectCount + 1);
+                    break;
+                case VK_DOWN:
+                    applyEffect(effectCount - 1);
                     break;
                 case VK_RIGHT:
                     selectModel(modelCount + 1);
@@ -110,9 +114,11 @@ struct DxMario::private_implementation {
     }
 
     void applyEffect(int effect) {
-        switch (effect) {
+        effectCount = (effect + 5) % 5;
+
+        switch (effectCount) {
         case 0:
-            scene->diffuseColor = D3DXVECTOR3(1.0f, 1.0f, 0.8f);
+            scene->diffuseColor = D3DXVECTOR3(1.5f, 1.5f, 1.5f);
             postEffects->setEffect("Toon");
             break;
         case 1:
