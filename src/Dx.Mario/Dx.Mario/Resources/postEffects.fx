@@ -216,20 +216,34 @@ float4 ToonPS(float2 tex0: TEXCOORD0) : COLOR
 {
     float4 original = tex2D(gTextureSampler, tex0);
     float4 toon = ToonColor(original);
-    float4 border = SobelPS(tex0);
 
-    return (toon - border * 2);
+    return toon;
+}
+
+float4 ToonBorderPS(float2 tex0: TEXCOORD0) : COLOR
+{
+    float4 color = 1 - SobelPS(tex0);
+    color.a = 1 - color.r;
+    return color;
 }
 
 technique Toon
 {
-    pass P0
+    pass Fill
     {
         vertexShader = compile vs_2_0 TransformVS();
-
-        // ps_2_0 limita número de instruções, impedindo que conversões de cores sejam aplicadas facilmente
-        pixelShader = compile ps_3_0 ToonPS();
+        pixelShader = compile ps_2_0 ToonPS();
         FillMode = Solid;
+    }
+
+    pass Borders
+    {
+        vertexShader = compile vs_2_0 TransformVS();
+        pixelShader = compile ps_2_0 ToonBorderPS();
+        FillMode = Solid;
+        AlphaTestEnable = true;
+        AlphaFunc = GreaterEqual;
+        AlphaRef = 200;
     }
 };
 
